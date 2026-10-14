@@ -1,0 +1,4 @@
+interface:
+  display_name: "Exact recipient messaging"
+  short_description: "Govern private device-specific SOS messages"
+  default_prompt: "Implement or audit exact-recipient SOS messages without unintended fan-out."

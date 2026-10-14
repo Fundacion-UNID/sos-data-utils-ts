@@ -1,0 +1,194 @@
+{
+  "name": "sos-data-utils-ts",
+  "version": "0.6.12",
+  "description": "Product-neutral SOS channel and BFF contract utilities",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./bff-api": {
+      "types": "./dist/bff-api.d.ts",
+      "default": "./dist/bff-api.js"
+    },
+    "./care-emergency-alert-records": {
+      "types": "./dist/care-emergency-alert-records.d.ts",
+      "default": "./dist/care-emergency-alert-records.js"
+    },
+    "./demo-identities": {
+      "types": "./dist/demo-identities.d.ts",
+      "default": "./dist/demo-identities.js"
+    },
+    "./portal-access-profiles": {
+      "types": "./dist/portal-access-profiles.data.d.ts",
+      "default": "./dist/portal-access-profiles.data.js"
+    },
+    "./clinical-terminology": {
+      "types": "./dist/clinical-terminology.d.ts",
+      "default": "./dist/clinical-terminology.js"
+    },
+    "./cross-sector-access-policy": {
+      "types": "./dist/cross-sector-access-policy.d.ts",
+      "default": "./dist/cross-sector-access-policy.js"
+    },
+    "./confidential-profile-index": {
+      "types": "./dist/confidential-profile-index.d.ts",
+      "default": "./dist/confidential-profile-index.js"
+    },
+    "./organization-verification-policy": {
+      "types": "./dist/organization-verification-policy.d.ts",
+      "default": "./dist/organization-verification-policy.js"
+    },
+    "./organization-service-catalog": {
+      "types": "./dist/organization-service-catalog.d.ts",
+      "default": "./dist/organization-service-catalog.js"
+    },
+    "./organization-workflow-access": {
+      "types": "./dist/organization-workflow-access.d.ts",
+      "default": "./dist/organization-workflow-access.js"
+    },
+    "./organization-subject-group-access": {
+      "types": "./dist/organization-subject-group-access.d.ts",
+      "default": "./dist/organization-subject-group-access.js"
+    },
+    "./organization-scoped-resource-identity": {
+      "types": "./dist/organization-scoped-resource-identity.d.ts",
+      "default": "./dist/organization-scoped-resource-identity.js"
+    },
+    "./immunization-reminder-plan": {
+      "types": "./dist/immunization-reminder-plan.d.ts",
+      "default": "./dist/immunization-reminder-plan.js"
+    },
+    "./immunization-flat-claims": {
+      "types": "./dist/immunization-flat-claims.d.ts",
+      "default": "./dist/immunization-flat-claims.js"
+    },
+    "./jurisdictional-identifier-types": {
+      "types": "./dist/jurisdictional-identifier-types.d.ts",
+      "default": "./dist/jurisdictional-identifier-types.js"
+    },
+    "./location-proximity": {
+      "types": "./dist/location-proximity.d.ts",
+      "default": "./dist/location-proximity.js"
+    },
+    "./multichannel-permission-forms": {
+      "types": "./dist/multichannel-permission-forms.d.ts",
+      "default": "./dist/multichannel-permission-forms.js"
+    },
+    "./multichannel-operation-schemas": {
+      "types": "./dist/multichannel-operation-schemas.d.ts",
+      "default": "./dist/multichannel-operation-schemas.js"
+    },
+    "./schema-org-claims": {
+      "types": "./dist/schema-org-claims.d.ts",
+      "default": "./dist/schema-org-claims.js"
+    },
+    "./secure-message-envelope": {
+      "types": "./dist/secure-message-envelope.d.ts",
+      "default": "./dist/secure-message-envelope.js"
+    },
+    "./directed-message-delivery": {
+      "types": "./dist/directed-message-delivery.d.ts",
+      "default": "./dist/directed-message-delivery.js"
+    },
+    "./encounter-communication-audience": {
+      "types": "./dist/encounter-communication-audience.d.ts",
+      "default": "./dist/encounter-communication-audience.js"
+    },
+    "./subject-communication-group": {
+      "types": "./dist/subject-communication-group.d.ts",
+      "default": "./dist/subject-communication-group.js"
+    },
+    "./subject-encounter-access": {
+      "types": "./dist/subject-encounter-access.d.ts",
+      "default": "./dist/subject-encounter-access.js"
+    },
+    "./ips-resource-coverage": {
+      "types": "./dist/ips-resource-coverage.d.ts",
+      "default": "./dist/ips-resource-coverage.js"
+    },
+    "./emergency-evidence": {
+      "types": "./dist/emergency-evidence.d.ts",
+      "default": "./dist/emergency-evidence.js"
+    },
+    "./emergency-group": {
+      "types": "./dist/emergency-group.d.ts",
+      "default": "./dist/emergency-group.js"
+    },
+    "./emergency-professional-roles": {
+      "types": "./dist/emergency-professional-roles.d.ts",
+      "default": "./dist/emergency-professional-roles.js"
+    },
+    "./place-card-association": {
+      "types": "./dist/place-card-association.d.ts",
+      "default": "./dist/place-card-association.js"
+    },
+    "./professional-access-policy": {
+      "types": "./dist/professional-access-policy.d.ts",
+      "default": "./dist/professional-access-policy.js"
+    },
+    "./prompt-audio": {
+      "types": "./dist/prompt-audio.d.ts",
+      "default": "./dist/prompt-audio.js"
+    },
+    "./repository-privacy": {
+      "types": "./dist/repository-privacy.d.ts",
+      "default": "./dist/repository-privacy.js"
+    },
+    "./task-artifact-schema": {
+      "types": "./dist/task-artifact-schema.d.ts",
+      "default": "./dist/task-artifact-schema.js"
+    },
+    "./subject-card-index": {
+      "types": "./dist/subject-card-index.d.ts",
+      "default": "./dist/subject-card-index.js"
+    },
+    "./subject-card-directory": {
+      "types": "./dist/subject-card-directory.d.ts",
+      "default": "./dist/subject-card-directory.js"
+    },
+    "./animal-card-interoperability": {
+      "types": "./dist/animal-card-interoperability.d.ts",
+      "default": "./dist/animal-card-interoperability.js"
+    },
+    "./continuity-service-capabilities": {
+      "types": "./dist/continuity-service-capabilities.d.ts",
+      "default": "./dist/continuity-service-capabilities.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "NOTICE",
+    "docs"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "check:repository-privacy": "npm run build && node scripts/check-repository-privacy.mjs",
+    "check": "npm run typecheck && npm test && node scripts/check-repository-privacy.mjs",
+    "prepack": "npm run check"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "private": false,
+  "dependencies": {
+    "fhir-data-utils-ts": "0.6.20",
+    "gdc-common-utils-ts": "2.9.21"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

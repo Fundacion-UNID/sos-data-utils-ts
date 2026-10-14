@@ -1,0 +1,8 @@
+dist/
+node_modules/
+test-results/
+.env
+.env.*
+!.env.example
+*.tgz
+.repository-privacy.local

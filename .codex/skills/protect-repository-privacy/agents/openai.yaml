@@ -1,0 +1,4 @@
+interface:
+  display_name: "Protect Repository Privacy"
+  short_description: "Prevent private operator data from entering repositories"
+  default_prompt: "Audit and change this repository without committing personal paths, real domains, tenant IDs, telephone numbers, secrets, or duplicated test literals."

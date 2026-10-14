@@ -1,0 +1,4 @@
+interface:
+  display_name: "Govern Organization Verification"
+  short_description: "Apply sector and country onboarding verification policy"
+  default_prompt: "Use the shared sector and jurisdiction policy to design or audit legal-organization verification, OTP, postal proof, host identity, and test fixtures."
