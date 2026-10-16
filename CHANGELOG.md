@@ -3,6 +3,10 @@
 
 ## Unreleased
 
+- Limit the shared SOSChain professional Demo catalog to health care, animal
+  care, animal shelter and public safety. Reuse the governed veterinarian,
+  veterinary-assistant and receptionist occupations for animal shelters while
+  keeping research absent and every selector explicitly non-authorizing.
 - Add the 2026 development-owner notice and re-establish the public repository
   from a clean source snapshot while
   retaining this changelog as the package release record.
