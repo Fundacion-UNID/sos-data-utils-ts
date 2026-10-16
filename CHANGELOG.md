@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+## 0.6.13 - 2026-10-16
+
 - Add the shared SOS GW application identity normalizer so every portal BFF
   derives the same reverse-DNS `AppId` and version headers from its stable URL.
 - Parse only the species-bound VetChain animal DID and reject split 5+16 paths
