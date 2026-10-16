@@ -31,7 +31,7 @@ export type AnimalCardNumberIdentity = Readonly<{
 /** Governed non-operational animal-card fixture shared by SOS, Vet and UHC tests. */
 export const ANIMAL_CARD_INTEROPERABILITY_EXAMPLES = Object.freeze({
   Dog: Object.freeze({
-    cardDid: 'did:web:example.invalid:card:vetchain:72409:0961510852611262',
+    cardDid: 'did:web:example.invalid:card:vetchain:0009615:724090961510852611262',
     cardNumber21: '724090961510852611262',
     ncbiTaxonomyId: '9615',
   }),
@@ -55,33 +55,33 @@ export function parseNcbiTaxonomyUri(value: unknown): string | undefined {
 }
 
 /**
- * Parses the current VetChain DID only with explicit species context.
- *
- * Species is deliberately absent from the DID and printed number. The caller
- * must obtain the NCBI TaxId from the resolved subject's canonical flat claims;
- * this function never guesses it from identifier digits or a display label.
+ * Parses the speciesId7 + cardNumber21 DID. The optional external taxonomy
+ * claim is cross-checked when present. Split 5+16 paths are invalid.
  */
 export function parseAnimalCardDidWeb(
   cardDid: string,
   ncbiTaxonomyId?: string,
 ): AnimalCardIdentity | undefined {
-  if (!ncbiTaxonomyId) return undefined
-  const match = String(cardDid || '').trim().match(
-    /^did:web:([A-Za-z0-9.-]+(?:%3A\d+)?):card:vetchain:(\d{5}):(\d{16})$/i,
+  const source = String(cardDid || '').trim()
+  const current = source.match(
+    /^did:web:([A-Za-z0-9.-]+(?:%3A\d+)?):card:vetchain:(\d{7}):(\d{21})$/i,
   )
-  if (!match) return undefined
+  if (!current) return undefined
   try {
-    const normalizedTaxonomyId = normalizeAnimalTaxonomyId(ncbiTaxonomyId)
+    const embeddedTaxonomyId = String(Number(current[2]))
+    const normalizedTaxonomyId = normalizeAnimalTaxonomyId(ncbiTaxonomyId || embeddedTaxonomyId)
     const speciesId7 = normalizeSubjectSpeciesId7(normalizedTaxonomyId)
-    const jurisdictionCode5 = match[2]
-    const animalId16 = match[3]
+    if (current && current[2] !== speciesId7) return undefined
+    const cardNumber21 = current[3]
+    const jurisdictionCode5 = cardNumber21.slice(0, 5)
+    const animalId16 = cardNumber21.slice(5)
     const animalNumericId15 = animalId16.slice(0, 15)
-    const cardNumber21 = `${jurisdictionCode5}${animalId16}`
     const expectedCheckDigit = computeDammCheckDigit(`${speciesId7}${cardNumber21.slice(0, 20)}`)
     if (expectedCheckDigit !== cardNumber21.slice(20)) return undefined
+    const host = current[1]
     return Object.freeze({
       subjectKind: 'animal',
-      cardDid: String(cardDid).trim(),
+      cardDid: `did:web:${host}:card:vetchain:${speciesId7}:${cardNumber21}`,
       cardNumber21,
       jurisdictionCode5,
       animalNumericId15,

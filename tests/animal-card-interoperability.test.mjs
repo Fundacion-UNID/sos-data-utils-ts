@@ -38,8 +38,12 @@ test('reads an SOS-visible animal species from canonical card flat claims', () =
   assert.equal(buildNcbiTaxonomyUri('9615'), animalClaims[SchemaOrgOrganizationClaim.MemberAdditionalType])
 })
 
-test('requires the external species claim because the current card DID does not embed species', () => {
-  assert.equal(parseAnimalCardDidWeb(cardDid), undefined)
+test('embeds species before the complete card number and cross-checks the external species claim', () => {
+  assert.equal(parseAnimalCardDidWeb(cardDid)?.speciesId7, '0009615')
+  assert.equal(
+    parseAnimalCardDidWeb('did:web:example.invalid:card:vetchain:72409:0961510852611262', '9615'),
+    undefined,
+  )
   assert.equal(readAnimalCardFromFlatClaims({
     ...animalClaims,
     [SchemaOrgOrganizationClaim.MemberAdditionalType]: undefined,

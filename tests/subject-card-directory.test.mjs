@@ -7,7 +7,7 @@ import {
 } from '../dist/subject-card-directory.js'
 import { REPOSITORY_SAFE_EXAMPLES } from '../dist/repository-privacy.js'
 
-const ANIMAL_CARD_DID = `did:web:${REPOSITORY_SAFE_EXAMPLES.domain}:card:vetchain:72409:0961510852611262`
+const ANIMAL_CARD_DID = `did:web:${REPOSITORY_SAFE_EXAMPLES.domain}:card:vetchain:0009615:724090961510852611262`
 const HUMAN_CARD_DID = `did:web:${REPOSITORY_SAFE_EXAMPLES.domain}:card:uhc:personal:example-subject`
 
 test('creates animal entries with explicit taxonomy and never permits a self relationship', () => {

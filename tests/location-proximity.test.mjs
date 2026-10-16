@@ -100,7 +100,7 @@ test('exports the browser-safe cross-sector contract through its focused subpath
 });
 
 test('models a vehicle as one IndividualProduct with a CSV audience of UHC and VetChain cards', () => {
-  const animalCardDid = 'did:web:vetchain.example:card:vetchain:72409:0961592399211916';
+  const animalCardDid = 'did:web:vetchain.example:card:vetchain:0009615:724090961592399211919';
   const vehicleClaims = buildIndividualProductClaims({
     identifier: VEHICLE_URN,
     identifierValue: VEHICLE_UUID,
@@ -205,7 +205,7 @@ test('builds event claims only when Event.about and Event.location identities ar
 });
 
 test('Step 4. selects verified push, SMS, email, and voice channels without duplicates', () => {
-  const animalCardDid = 'did:web:vetchain.example:card:vetchain:72409:0961592399211916';
+  const animalCardDid = 'did:web:vetchain.example:card:vetchain:0009615:724090961592399211919';
   const gatewayDeviceClaims = buildIndividualProductClaims({
     identifier: MOBILE_DEVICE_URN,
     identifierValue: MOBILE_DEVICE_UUID,
