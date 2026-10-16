@@ -155,6 +155,10 @@
       "types": "./dist/animal-card-interoperability.d.ts",
       "default": "./dist/animal-card-interoperability.js"
     },
+    "./gateway-application-identity": {
+      "types": "./dist/gateway-application-identity.d.ts",
+      "default": "./dist/gateway-application-identity.js"
+    },
     "./continuity-service-capabilities": {
       "types": "./dist/continuity-service-capabilities.d.ts",
       "default": "./dist/continuity-service-capabilities.js"

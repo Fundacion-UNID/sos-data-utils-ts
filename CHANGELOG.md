@@ -3,6 +3,11 @@
 
 ## Unreleased
 
+- Add the shared SOS GW application identity normalizer so every portal BFF
+  derives the same reverse-DNS `AppId` and version headers from its stable URL.
+- Parse only the species-bound VetChain animal DID and reject split 5+16 paths
+  instead of normalizing them.
+
 - Limit the shared SOSChain professional Demo catalog to health care, animal
   care, animal shelter and public safety. Reuse the governed veterinarian,
   veterinary-assistant and receptionist occupations for animal shelters while

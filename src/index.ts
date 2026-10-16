@@ -36,3 +36,4 @@ export * from './subject-card-directory.js';
 export * from './subject-communication-group.js';
 export * from './subject-encounter-access.js';
 export * from './animal-card-interoperability.js';
+export * from './gateway-application-identity.js';
