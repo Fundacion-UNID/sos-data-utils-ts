@@ -65,6 +65,7 @@ export const SOSCHAIN_PORTAL_ACCESS_MODES: readonly SoschainPortalAccessMode[] =
 export const SoschainProfessionalDemoSectorIds = Object.freeze({
   HealthCare: DataspaceSectors.HealthCare,
   AnimalCare: DataspaceSectors.AnimalCare,
+  AnimalShelter: 'animal-shelter',
   PublicSafety: CrossSectorOperationalSectors.PublicSafety,
 } as const)
 
@@ -167,6 +168,27 @@ export const SOSCHAIN_PROFESSIONAL_DEMO_PROFILES: readonly SoschainProfessionalD
     true,
   ),
   demoProfile(
+    SoschainProfessionalDemoProfileIds.Veterinarian,
+    SoschainProfessionalDemoSectorIds.AnimalShelter,
+    HealthcareActorRoles.Veterinarian,
+    'Veterinarian',
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.VeterinaryAssistant,
+    SoschainProfessionalDemoSectorIds.AnimalShelter,
+    HealthcareActorRoles.VeterinaryTechnicianOrAssistant,
+    'Veterinary assistant',
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.Receptionist,
+    SoschainProfessionalDemoSectorIds.AnimalShelter,
+    HealthcareActorRoles.Receptionist,
+    'Receptionist',
+    true,
+  ),
+  demoProfile(
     SoschainProfessionalDemoProfileIds.Firefighter,
     SoschainProfessionalDemoSectorIds.PublicSafety,
     EmergencyProfessionalRoles[EmergencyProfessionalRoleIds.Firefighter].claim,
@@ -215,6 +237,12 @@ export const SOSCHAIN_DEMO_DEPARTMENTS: readonly SoschainDemoDepartment[] = Obje
     id: SoschainDemoDepartmentIds.Emergency,
     sector: DataspaceSectors.AnimalCare,
     titleEn: 'Veterinary emergency department',
+    grantsAuthority: false,
+  }),
+  Object.freeze({
+    id: SoschainDemoDepartmentIds.Emergency,
+    sector: SoschainProfessionalDemoSectorIds.AnimalShelter,
+    titleEn: 'Animal shelter care service',
     grantsAuthority: false,
   }),
   Object.freeze({

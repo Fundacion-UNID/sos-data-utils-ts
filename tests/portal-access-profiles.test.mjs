@@ -20,6 +20,12 @@ const priorityMvpProfileIds = [
   SoschainProfessionalDemoProfileIds.Lifeguard,
   SoschainProfessionalDemoProfileIds.PoliceOfficer,
 ]
+const focusedDemoSectorIds = [
+  SoschainProfessionalDemoSectorIds.AnimalCare,
+  SoschainProfessionalDemoSectorIds.HealthCare,
+  SoschainProfessionalDemoSectorIds.AnimalShelter,
+  SoschainProfessionalDemoSectorIds.PublicSafety,
+]
 
 test('publishes explicit real, test-network and preloaded-demo portal modes', () => {
   assert.deepEqual(SOSCHAIN_PORTAL_ACCESS_MODES.map(({ id }) => id), expectedAccessModeIds)
@@ -30,6 +36,7 @@ test('publishes explicit real, test-network and preloaded-demo portal modes', ()
 })
 
 test('publishes every priority health-care and public-safety MVP profile without granting authority', () => {
+  assert.deepEqual(enabledProfessionalDemoSectors.toSorted(), focusedDemoSectorIds.toSorted())
   assert.deepEqual(
     [...new Set(SOSCHAIN_PROFESSIONAL_DEMO_PROFILES.filter(({ enabled }) => enabled).map(({ sector }) => sector))],
     enabledProfessionalDemoSectors,
@@ -37,6 +44,16 @@ test('publishes every priority health-care and public-safety MVP profile without
   const enabledProfileIds = SOSCHAIN_PROFESSIONAL_DEMO_PROFILES.filter(({ enabled }) => enabled).map(({ id }) => id)
   assert.ok(priorityMvpProfileIds.every(profileId => enabledProfileIds.includes(profileId)))
   assert.ok(getSoschainDemoProfilesForSector(SoschainProfessionalDemoSectorIds.PublicSafety).length > 0)
+})
+
+test('reuses animal-care occupations for animal shelters without adding research', () => {
+  const shelterProfiles = getSoschainDemoProfilesForSector(SoschainProfessionalDemoSectorIds.AnimalShelter)
+  assert.deepEqual(shelterProfiles.map(({ id }) => id), [
+    SoschainProfessionalDemoProfileIds.Veterinarian,
+    SoschainProfessionalDemoProfileIds.VeterinaryAssistant,
+    SoschainProfessionalDemoProfileIds.Receptionist,
+  ])
+  assert.ok(shelterProfiles.every(({ grantsAuthority }) => grantsAuthority === false))
 })
 
 test('keeps emergency departments as operational demo context rather than authority', () => {
