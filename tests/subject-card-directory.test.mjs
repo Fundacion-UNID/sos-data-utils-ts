@@ -34,6 +34,21 @@ test('creates animal entries with explicit taxonomy and never permits a self rel
   }), /never have a self relationship/)
 })
 
+test('accepts an animal card from either governed index provider', () => {
+  const entry = createSubjectCardDirectoryEntry({
+    cardDid: ANIMAL_CARD_DID,
+    provider: 'unid',
+    displayName: 'Animal one',
+    subjectKind: 'animal',
+    ncbiTaxonomyId: '9615',
+    relationship: 'controller',
+    active: true,
+  })
+
+  assert.equal(entry.provider, 'unid')
+  assert.equal(entry.subjectKind, 'animal')
+})
+
 test('creates human entries with the final relationship vocabulary', () => {
   const entry = createSubjectCardDirectoryEntry({
     cardDid: HUMAN_CARD_DID,

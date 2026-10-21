@@ -4,6 +4,12 @@
 Copyright 2026 Connecting Solution & Applications Ltd.
 Licensed under the Apache License, Version 2.0; see [`NOTICE`](NOTICE).
 
+## Documentation
+
+The [documentation index](docs/README.md) is the entry point for architecture,
+organization and authorization contracts, communication and emergency flows,
+interoperability guidance, public notification datasets and release policy.
+
 ## Public source history
 
 The public repository begins from a clean 2026 source snapshot. The retained
@@ -79,8 +85,9 @@ shapes, deterministic builders and validators only. Runtime orchestration,
 transport, persistence adapters, application policy and presentation remain
 outside this package.
 
-The BFF contract defines capability-based route roots. `/api/assistant/*` is
-the public route family; `/api/internal/*` is reserved for authenticated
+The BFF contract defines capability-based route roots. `/api/profile`,
+`/api/subjects`, `/api/cards`, `/api/notifications` and `/api/assistant/*` are
+the shared public families; `/api/internal/*` is reserved for authenticated
 service-to-service adapters. Product-name prefixes are not public API
 surfaces.
 

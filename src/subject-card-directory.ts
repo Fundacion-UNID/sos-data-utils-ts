@@ -30,7 +30,6 @@ export type HumanSubjectCardDirectoryEntry = SubjectCardDirectoryEntryBase & Rea
 }>
 
 export type AnimalSubjectCardDirectoryEntry = SubjectCardDirectoryEntryBase & Readonly<{
-  provider: 'vetchain'
   subjectKind: 'animal'
   ncbiTaxonomyId: string
   relationship: AnimalSubjectRelationship
@@ -67,7 +66,6 @@ export function createSubjectCardDirectoryEntry(
     throw new TypeError('caregiverCompensation is valid only for a caregiver relationship.')
   }
   if (input.subjectKind === 'animal') {
-    if (input.provider !== 'vetchain') throw new TypeError('Animal cards must be provided by VetChain.')
     if (relationship === 'self') {
       throw new TypeError('An animal can never have a self relationship with an application user.')
     }

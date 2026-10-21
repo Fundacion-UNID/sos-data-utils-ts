@@ -1,10 +1,18 @@
 /** Capability-first route roots shared by SOS, human-health and animal BFFs. */
 export const SharedBffApiRoutes = Object.freeze({
+  profile: '/api/profile',
+  subjects: '/api/subjects',
+  cards: '/api/cards',
+  notifications: '/api/notifications',
   assistant: '/api/assistant',
   internal: '/api/internal',
 } as const);
 
 const PUBLIC_ROUTE_ROOTS = Object.freeze([
+  SharedBffApiRoutes.profile,
+  SharedBffApiRoutes.subjects,
+  SharedBffApiRoutes.cards,
+  SharedBffApiRoutes.notifications,
   SharedBffApiRoutes.assistant,
 ] as const);
 
