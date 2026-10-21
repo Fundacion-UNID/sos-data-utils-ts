@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+## 0.6.14 - 2026-10-20
+
 - Allow a governed animal-card directory entry to identify either UNID or
   VetChain as its index provider while preserving taxonomy, checksum and
   relationship validation.
