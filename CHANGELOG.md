@@ -3,6 +3,16 @@
 
 ## Unreleased
 
+- Allow a governed animal-card directory entry to identify either UNID or
+  VetChain as its index provider while preserving taxonomy, checksum and
+  relationship validation.
+- Define product-neutral public BFF route roots for profile, subjects, cards,
+  notifications and assistants so separate portal, telephone and KIA hosts can
+  share one versioned operation contract.
+- Document the review-stage public notification dataset MVP for blood and
+  plasma donation, veterinary and public-health topics, including publisher
+  authority, subscriber-side exclusions and multichannel parity.
+
 ## 0.6.13 - 2026-10-16
 
 - Add the shared SOS GW application identity normalizer so every portal BFF
