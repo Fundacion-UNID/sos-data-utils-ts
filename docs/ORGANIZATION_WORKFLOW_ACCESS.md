@@ -47,6 +47,12 @@ the selected `PractitionerRole` is a member of the same governed team. It keeps
 the selected member profile's real `RESPRSN` or `ISCO-08|<code>` role; it does
 not replace a clinical or administrative role with controller authority.
 Browser-selected roles, ordinary employee status and Group membership never create authority.
+
+The `public-communication-request-publishing` Group follows the same rule. It describes
+the organization's alert-publishing team, while a separate active Consent grants
+only `organization/CommunicationRequest.c` to the exact PractitionerRole. A job
+title such as doctor, nurse, veterinarian, police officer, lifeguard or
+administrative assistant does not grant publication by itself.
 Production self-assignment fails closed and requires a separately governed
 approval policy.
 

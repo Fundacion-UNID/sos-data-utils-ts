@@ -23,7 +23,7 @@ const priorityMvpProfileIds = [
 const focusedDemoSectorIds = [
   SoschainProfessionalDemoSectorIds.AnimalCare,
   SoschainProfessionalDemoSectorIds.HealthCare,
-  SoschainProfessionalDemoSectorIds.AnimalShelter,
+  SoschainProfessionalDemoSectorIds.PublicHealth,
   SoschainProfessionalDemoSectorIds.PublicSafety,
 ]
 
@@ -46,19 +46,19 @@ test('publishes every priority health-care and public-safety MVP profile without
   assert.ok(getSoschainDemoProfilesForSector(SoschainProfessionalDemoSectorIds.PublicSafety).length > 0)
 })
 
-test('reuses animal-care occupations for animal shelters without adding research', () => {
-  const shelterProfiles = getSoschainDemoProfilesForSector(SoschainProfessionalDemoSectorIds.AnimalShelter)
-  assert.deepEqual(shelterProfiles.map(({ id }) => id), [
-    SoschainProfessionalDemoProfileIds.Veterinarian,
-    SoschainProfessionalDemoProfileIds.VeterinaryAssistant,
-    SoschainProfessionalDemoProfileIds.Receptionist,
+test('publishes bounded public-health profiles without adding animal services', () => {
+  const publicHealthProfiles = getSoschainDemoProfilesForSector(SoschainProfessionalDemoSectorIds.PublicHealth)
+  assert.deepEqual(publicHealthProfiles.map(({ id }) => id), [
+    SoschainProfessionalDemoProfileIds.Doctor,
+    SoschainProfessionalDemoProfileIds.Nurse,
+    SoschainProfessionalDemoProfileIds.MedicalSecretary,
   ])
-  assert.ok(shelterProfiles.every(({ grantsAuthority }) => grantsAuthority === false))
+  assert.ok(publicHealthProfiles.every(({ grantsAuthority }) => grantsAuthority === false))
+  assert.equal(JSON.stringify(SOSCHAIN_PROFESSIONAL_DEMO_PROFILES).includes('animal-shelter'), false)
 })
 
 test('keeps emergency departments as operational demo context rather than authority', () => {
-  const emergencyDepartments = SOSCHAIN_DEMO_DEPARTMENTS.filter(({ id }) => id === 'emergency')
-  assert.deepEqual(emergencyDepartments.map(({ sector }) => sector), enabledProfessionalDemoSectors)
-  assert.ok(emergencyDepartments.every(({ grantsAuthority }) => grantsAuthority === false))
+  assert.deepEqual(SOSCHAIN_DEMO_DEPARTMENTS.map(({ sector }) => sector), enabledProfessionalDemoSectors)
+  assert.ok(SOSCHAIN_DEMO_DEPARTMENTS.every(({ grantsAuthority }) => grantsAuthority === false))
   assert.ok(SOSCHAIN_PROFESSIONAL_DEMO_PROFILES.every(({ grantsAuthority }) => grantsAuthority === false))
 })

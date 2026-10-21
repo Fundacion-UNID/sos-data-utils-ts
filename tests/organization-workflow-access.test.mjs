@@ -21,6 +21,7 @@ const encounterGroupReference = `Group/encounter-${REPOSITORY_SAFE_EXAMPLES.reso
 const schedulingGroupReference = `Group/scheduling-${REPOSITORY_SAFE_EXAMPLES.resourceUuid}`
 const clinicalContributionGroupReference = `Group/clinical-contribution-${REPOSITORY_SAFE_EXAMPLES.resourceUuid}`
 const subjectRegistrationGroupReference = `Group/subject-registration-${REPOSITORY_SAFE_EXAMPLES.resourceUuid}`
+const publicCommunicationRequestGroupReference = `Group/public-alert-${REPOSITORY_SAFE_EXAMPLES.resourceUuid}`
 const assignedAt = REPOSITORY_SAFE_EXAMPLES.organizationScopedResources.slotStart
 const memberRole = HealthcareActorRoles.Veterinarian
 
@@ -127,6 +128,25 @@ test('limits subject registration to the routed organization without granting Gr
   assert.equal(plan.authorization.resource.meta.claims['Consent.action'], capabilities.join(','))
   assert.equal(plan.authorization.resource.meta.claims['Consent.action'].includes('.r'), false)
   assert.equal(plan.authorization.resource.meta.claims['Consent.action'].includes('Group.u'), false)
+})
+
+test('separates the public-alert team from its exact CommunicationRequest permission', () => {
+  const capabilities = [OrganizationWorkflowCapabilities.CommunicationRequestCreate]
+  const plan = buildTestNetworkControllerWorkflowAssignment({
+    networkKind: 'test-network',
+    controller,
+    member,
+    groupKind: OrganizationWorkflowGroupKinds.PublicCommunicationRequestPublishing,
+    groupReference: publicCommunicationRequestGroupReference,
+    capabilities,
+    assignedAt,
+  })
+
+  assert.deepEqual(plan.group.resource.meta.claims['Group.name'], ['Public alert publishing'])
+  assert.equal(plan.membership.resource.meta.claims['Group.member'][0], practitionerRoleReference)
+  assert.equal(plan.authorization.resource.meta.claims['Consent.action'], OrganizationWorkflowCapabilities.CommunicationRequestCreate)
+  assert.equal(plan.authorization.resource.meta.claims['Consent.source-reference'], publicCommunicationRequestGroupReference)
+  assert.equal('Consent.action' in plan.membership.resource.meta.claims, false)
 })
 
 test('uses the same controller-resolved assignment policy with a resettable Demo persistence adapter', () => {

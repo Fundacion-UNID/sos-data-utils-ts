@@ -9,8 +9,9 @@ area relevant to the workflow being implemented or reviewed.
 - [Shared data-package boundary](SDK_LAYERING.md) — what this package owns and
   what remains in FHIR utilities, SDK orchestration, gateways and applications.
 - [Public notification datasets MVP](PUBLIC_NOTIFICATION_DATASETS_MVP.md) —
-  review-stage contract for public blood-donation, veterinary and public-health
-  notification datasets and BFF-side subscription rules.
+  public blood-donation, veterinary and public-health datasets, the shared
+  JSON Schema writing form, CommunicationRequest flat claims and BFF-side
+  subscription rules.
 - [Shared care-continuity, emergency-request and alert contracts](CARE_CONTINUITY_EMERGENCY_AND_ALERT_CONTRACTS.md)
   — inventory and boundaries for care, emergency and governed alert records.
 

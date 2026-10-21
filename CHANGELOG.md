@@ -3,13 +3,18 @@
 
 ## Unreleased
 
+- Add executable public notification dataset, Markdown composition, bounded
+  image/PDF attachment and subscriber-side delivery-decision contracts for the
+  public alert MVP, including simple dog/cat blood-donation datasets, while
+  keeping addressed care-transition authority separate.
+
 ## 0.6.14 - 2026-10-20
 
 - Allow a governed animal-card directory entry to identify either UNID or
   VetChain as its index provider while preserving taxonomy, checksum and
   relationship validation.
 - Define product-neutral public BFF route roots for profile, subjects, cards,
-  notifications and assistants so separate portal, telephone and KIA hosts can
+  notifications and assistants so separate portal, telephone and chat hosts can
   share one versioned operation contract.
 - Document the review-stage public notification dataset MVP for blood and
   plasma donation, veterinary and public-health topics, including publisher
