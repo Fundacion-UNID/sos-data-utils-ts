@@ -201,12 +201,12 @@ assistants, chat and KIA templates must send the same canonical operation to
 their authenticated BFF. A channel may change prompts and presentation, but it
 must not define its own topic grammar or suppression semantics.
 
-This does not require one deployed portal shell. UHC, PetChain and SOSChain may
-remain separate applications while importing the same versioned contracts,
-complete screens where applicable and typed BFF client. The host supplies a
-trusted product/jurisdiction capability manifest and adapters. A browser or
-assistant cannot select a publisher sector, jurisdiction or delivery authority
-that the BFF did not authorize.
+This does not require one deployed portal shell. Human, animal and emergency
+portals may remain separate applications while importing the same versioned
+contracts, complete screens where applicable and typed BFF client. The host
+supplies a trusted product/jurisdiction capability manifest and adapters. A
+browser or assistant cannot select a publisher sector, jurisdiction or
+delivery authority that the BFF did not authorize.
 
 The data package owns the operation payloads and validation rules. Public BFF
 paths and client orchestration are shared application/SDK contracts; delivery
