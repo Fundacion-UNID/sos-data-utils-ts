@@ -25,6 +25,7 @@ export const OrganizationWorkflowCapabilities = Object.freeze({
   ScheduleCruds: 'organization/Schedule.cruds',
   SlotCruds: 'organization/Slot.cruds',
   CompositionCuds: 'Subject/Composition.cuds',
+  CommunicationRequestCreate: 'organization/CommunicationRequest.c',
 } as const)
 
 export type OrganizationSubjectRegisterCapability =
@@ -39,6 +40,7 @@ export const OrganizationWorkflowGroupKinds = Object.freeze({
   SchedulingOperations: 'scheduling-operations',
   ClinicalContribution: 'clinical-contribution',
   SubjectRegistration: 'subject-registration',
+  PublicCommunicationRequestPublishing: 'public-communication-request-publishing',
 } as const)
 
 export type OrganizationWorkflowGroupKind =
@@ -106,6 +108,9 @@ const CAPABILITIES_BY_GROUP: Readonly<Record<OrganizationWorkflowGroupKind, Read
       OrganizationWorkflowCapabilities.CompositionCuds,
     ]),
     [OrganizationWorkflowGroupKinds.SubjectRegistration]: new Set<OrganizationWorkflowCapability>(),
+    [OrganizationWorkflowGroupKinds.PublicCommunicationRequestPublishing]: new Set([
+      OrganizationWorkflowCapabilities.CommunicationRequestCreate,
+    ]),
   })
 
 /** Limits individual or animal registration to one exact organization or department. */
@@ -303,6 +308,7 @@ function workflowGroupName(groupKind: OrganizationWorkflowGroupKind): string {
   if (groupKind === OrganizationWorkflowGroupKinds.EncounterOperations) return 'Encounter operations'
   if (groupKind === OrganizationWorkflowGroupKinds.SchedulingOperations) return 'Scheduling operations'
   if (groupKind === OrganizationWorkflowGroupKinds.SubjectRegistration) return 'Subject registration'
+  if (groupKind === OrganizationWorkflowGroupKinds.PublicCommunicationRequestPublishing) return 'Public alert publishing'
   return 'Clinical contribution'
 }
 

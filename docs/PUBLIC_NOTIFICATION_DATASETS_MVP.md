@@ -2,9 +2,10 @@
 
 ## Status and scope
 
-This document is a design contract for review. It does not claim that the
-datasets, publisher authorization, subscriptions or delivery flow are already
-implemented.
+This document defines the MVP for review. The shared dataset grammar, browser
+schema, flat-claim mapping and subscriber suppression rules are implemented in
+this package. That does not by itself prove a deployed dataset, an authorized
+gateway write or delivery to a real subscriber.
 
 The MVP lets a verified organization publish a public notification to a
 jurisdictional dataset. A person's BFF subscribes to selected datasets and
@@ -30,6 +31,7 @@ separates the semantic segments. The MVP uses these three bounded families:
 ```text
 <jurisdiction>_health-care_public_blood-donation_<donation-segments>
 <jurisdiction>_animal-care_public_veterinary_<species>_<communication-category>
+<jurisdiction>_animal-care_public_blood-donation_<species>_<communication-category>
 <jurisdiction>_public-health_<environment|animal|human>_<topic>_<communication-category>
 ```
 
@@ -59,24 +61,25 @@ health-care blood-donation service.
 Whole-blood datasets include the requested blood group:
 
 ```text
-ca-bc_health-care_public_blood-donation_whole-blood_a-positive
-ca-bc_health-care_public_blood-donation_whole-blood_a-negative
-ca-bc_health-care_public_blood-donation_whole-blood_b-positive
-ca-bc_health-care_public_blood-donation_whole-blood_b-negative
-ca-bc_health-care_public_blood-donation_whole-blood_ab-positive
-ca-bc_health-care_public_blood-donation_whole-blood_ab-negative
-ca-bc_health-care_public_blood-donation_whole-blood_o-positive
-ca-bc_health-care_public_blood-donation_whole-blood_o-negative
+ca-bc_health-care_public_blood-donation_whole-blood_a-rh-positive
+ca-bc_health-care_public_blood-donation_whole-blood_a-rh-negative
+ca-bc_health-care_public_blood-donation_whole-blood_b-rh-positive
+ca-bc_health-care_public_blood-donation_whole-blood_b-rh-negative
+ca-bc_health-care_public_blood-donation_whole-blood_ab-rh-positive
+ca-bc_health-care_public_blood-donation_whole-blood_ab-rh-negative
+ca-bc_health-care_public_blood-donation_whole-blood_o-rh-positive
+ca-bc_health-care_public_blood-donation_whole-blood_o-rh-negative
 ```
 
-Plasma donation does not require a blood-group segment in the MVP:
+Plasmapheresis and plateletpheresis do not require a blood-group segment in the MVP:
 
 ```text
-ca-bc_health-care_public_blood-donation_plasma
+ca-bc_health-care_public_blood-donation_plasmapheresis
+ca-bc_health-care_public_blood-donation_plateletpheresis
 ```
 
-`plasma` describes the requested donation. The extraction method is not part
-of the dataset name.
+The final segment names the applicable donation procedure without adding a
+blood-group segment to the MVP name.
 
 ## Public veterinary datasets
 
@@ -88,6 +91,17 @@ ca-bc_animal-care_public_veterinary_cat_alert
 ca-bc_animal-care_public_veterinary_dog_instruction
 ca-bc_animal-care_public_veterinary_cat_instruction
 ```
+
+The same verified animal-care service can request animal blood donation using
+the simple MVP species channels:
+
+```text
+ca-bc_animal-care_public_blood-donation_dog_alert
+ca-bc_animal-care_public_blood-donation_cat_alert
+```
+
+Animal blood groups and compatibility evidence belong in the notification body
+or a governed future extension, not in the MVP dataset name.
 
 The MVP uses the readable species values `dog` and `cat`. It does not put an
 external species terminology code in the dataset name.
@@ -127,31 +141,74 @@ The concrete disease, affected area, recommendation and validity period belong
 to the notification record. The MVP does not create a different dataset for
 influenza, COVID or every other named condition.
 
-## Notification record
+## Dataset entry and shared writing schema
 
-One dataset may contain notifications from multiple verified organizations.
-Each record carries at least:
+One dataset may contain requests from multiple verified organizations. Each
+canonical entry is a FHIR `CommunicationRequest` represented as flat claims.
+It carries the verified requester `PractitionerRole`, publishing organization,
+topic Endpoint, public audience Group, priority, active period and references
+to its content. Images, PDF files and the Markdown body are independent
+`DocumentReference` entries.
+
+The browser screen is driven by `PUBLIC_ALERT_FORM_SCHEMA`. It behaves like an
+email editor and exposes only:
 
 ```text
-notificationId
 datasetName
-issuerReference
-issuerName
-title
-message
-locations
-publishedAt
+subject
+bodyMarkdown
+priority
 validUntil
-status
+attachments
 ```
 
-`issuerReference` is a stable protected organization reference. A tax number,
-registration number or other raw legal identifier must not appear in the
-dataset name, broker key or general logs.
+The BFF supplies the identifier, status, intent, requester, information
+provider, topic Endpoint and audience Group after it verifies the employee's
+active assignment. Those authority-bearing values are deliberately absent
+from the JSON Schema and browser request.
 
-`status` supports `active`, `cancelled` and `expired`. Updating or cancelling a
-notification preserves its identity so BFFs can apply the change
-idempotently.
+The separate operational claim `sos.CommunicationRequest.public-dataset`
+retains the exact dataset name needed for routing and discovery. It is not
+presented as an official FHIR SearchParameter and it carries no authority.
+
+The layers are therefore complementary, not alternatives:
+
+1. the **dataset name** is the public topic address;
+2. the **JSON Schema** renders and validates the shared writing screen; and
+3. the **FHIR CommunicationRequest flat claims** are the canonical stored
+   request.
+
+If delivery is later performed, a delivery service may record the result as a
+FHIR `Communication`. It must not rewrite the request into a proprietary
+`PublicNotification` resource.
+
+## Public catalogue projection
+
+The public catalogue and the governed operational request remain separate
+views of the same publication:
+
+- the topic is described as a Schema.org `Dataset`, which is a kind of
+  `CreativeWork`;
+- a publicly readable notice may be projected as a Schema.org `CreativeWork`
+  using `name`, `text`, `expires` and `publisher`; and
+- downloadable representations use `encoding` with a `MediaObject`.
+  Images may use the more specific `ImageObject`; a PDF uses a `MediaObject`
+  with `encodingFormat` set to `application/pdf`.
+
+This Schema.org view supports catalogue discovery and public presentation. It
+does not carry employee authority, Consent, subscriber identity or delivery
+state and does not replace the canonical FHIR `CommunicationRequest` and
+`DocumentReference` flat claims.
+
+The shared editor does not make the two audience models equivalent. An
+addressed care-transition operation identifies one subject and the BFF resolves
+only that subject's authorized caregivers. A public-dataset operation identifies
+one dataset and never exposes subscriber references to the publisher.
+
+The organization reference is stable and protected. A tax number, registration
+number or other raw legal identifier must not appear in the dataset name,
+broker key or general logs. Updating, revoking or completing a request
+preserves its identity so subscriber BFFs can apply the change idempotently.
 
 ## Publisher authority
 
@@ -197,9 +254,9 @@ subscriber may continue to receive the same public notification.
 
 The notification, subscription, issuer exclusion, mute and delivery-preference
 shapes are channel-neutral. Personal portals, mobile applications, telephone
-assistants, chat and KIA templates must send the same canonical operation to
-their authenticated BFF. A channel may change prompts and presentation, but it
-must not define its own topic grammar or suppression semantics.
+assistants and chat adapters must send the same canonical operation to their
+authenticated BFF. A channel may change prompts and presentation, but it must
+not define its own topic grammar or suppression semantics.
 
 This does not require one deployed portal shell. Human, animal and emergency
 portals may remain separate applications while importing the same versioned

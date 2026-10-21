@@ -65,7 +65,7 @@ export const SOSCHAIN_PORTAL_ACCESS_MODES: readonly SoschainPortalAccessMode[] =
 export const SoschainProfessionalDemoSectorIds = Object.freeze({
   HealthCare: DataspaceSectors.HealthCare,
   AnimalCare: DataspaceSectors.AnimalCare,
-  AnimalShelter: 'animal-shelter',
+  PublicHealth: CrossSectorOperationalSectors.PublicHealth,
   PublicSafety: CrossSectorOperationalSectors.PublicSafety,
 } as const)
 
@@ -168,24 +168,24 @@ export const SOSCHAIN_PROFESSIONAL_DEMO_PROFILES: readonly SoschainProfessionalD
     true,
   ),
   demoProfile(
-    SoschainProfessionalDemoProfileIds.Veterinarian,
-    SoschainProfessionalDemoSectorIds.AnimalShelter,
-    HealthcareActorRoles.Veterinarian,
-    'Veterinarian',
+    SoschainProfessionalDemoProfileIds.Doctor,
+    SoschainProfessionalDemoSectorIds.PublicHealth,
+    HealthcareActorRoles.MedicalDoctors,
+    'Doctor',
     true,
   ),
   demoProfile(
-    SoschainProfessionalDemoProfileIds.VeterinaryAssistant,
-    SoschainProfessionalDemoSectorIds.AnimalShelter,
-    HealthcareActorRoles.VeterinaryTechnicianOrAssistant,
-    'Veterinary assistant',
+    SoschainProfessionalDemoProfileIds.Nurse,
+    SoschainProfessionalDemoSectorIds.PublicHealth,
+    HealthcareActorRoles.NursingProfessional,
+    'Nurse',
     true,
   ),
   demoProfile(
-    SoschainProfessionalDemoProfileIds.Receptionist,
-    SoschainProfessionalDemoSectorIds.AnimalShelter,
-    HealthcareActorRoles.Receptionist,
-    'Receptionist',
+    SoschainProfessionalDemoProfileIds.MedicalSecretary,
+    SoschainProfessionalDemoSectorIds.PublicHealth,
+    HealthcareActorRoles.MedicalSecretary,
+    'Administrative assistant',
     true,
   ),
   demoProfile(
@@ -213,6 +213,7 @@ export const SOSCHAIN_PROFESSIONAL_DEMO_PROFILES: readonly SoschainProfessionalD
 
 export const SoschainDemoDepartmentIds = Object.freeze({
   Emergency: 'emergency',
+  PublicInformation: 'public-information',
 } as const)
 
 export type SoschainDemoDepartmentId =
@@ -240,9 +241,9 @@ export const SOSCHAIN_DEMO_DEPARTMENTS: readonly SoschainDemoDepartment[] = Obje
     grantsAuthority: false,
   }),
   Object.freeze({
-    id: SoschainDemoDepartmentIds.Emergency,
-    sector: SoschainProfessionalDemoSectorIds.AnimalShelter,
-    titleEn: 'Animal shelter care service',
+    id: SoschainDemoDepartmentIds.PublicInformation,
+    sector: SoschainProfessionalDemoSectorIds.PublicHealth,
+    titleEn: 'Public information service',
     grantsAuthority: false,
   }),
   Object.freeze({
