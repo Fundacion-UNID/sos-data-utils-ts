@@ -71,3 +71,16 @@ export const SchemaOrgActionClaim = Object.freeze({
 } as const);
 
 export type SchemaOrgActionClaimKey = typeof SchemaOrgActionClaim[keyof typeof SchemaOrgActionClaim];
+
+/** Schema.org Service claims used by neutral organization service catalogs. */
+export const SchemaOrgServiceClaim = Object.freeze({
+  Identifier: 'org.schema.Service.identifier',
+  Name: 'org.schema.Service.name',
+  Description: 'org.schema.Service.description',
+  ServiceType: 'org.schema.Service.serviceType',
+  Provider: 'org.schema.Service.provider.identifier',
+  Department: 'org.schema.Service.department.identifier',
+  AvailableAtOrFrom: 'org.schema.Service.availableAtOrFrom.identifier',
+} as const);
+
+export type SchemaOrgServiceClaimKey = typeof SchemaOrgServiceClaim[keyof typeof SchemaOrgServiceClaim];
