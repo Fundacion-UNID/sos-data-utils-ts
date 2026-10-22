@@ -1,6 +1,6 @@
 {
   "name": "sos-data-utils-ts",
-  "version": "0.6.16",
+  "version": "0.6.15",
   "description": "Product-neutral SOS channel and BFF contract utilities",
   "license": "Apache-2.0",
   "type": "module",

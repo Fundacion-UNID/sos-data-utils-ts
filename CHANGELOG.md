@@ -3,8 +3,6 @@
 
 ## Unreleased
 
-## 0.6.16 - 2026-10-21
-
 - Add the Schema.org-first public organization service catalog: explicit
   Organization, department, Place and Service publication; flat claims; a DCAT
   discovery descriptor; and fail-closed cache refresh, withdrawal and rollback

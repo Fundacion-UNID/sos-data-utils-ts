@@ -57,7 +57,7 @@ const input = Object.freeze({
     publishInCatalog: false,
   }],
   distribution: {
-    accessUrl: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/datasets/organization-example/services`,
+    accessUrl: 'https://catalog.example.invalid/datasets/organization-example/services',
     mediaType: 'application/vnd.api+json',
   },
 })
