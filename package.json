@@ -19,10 +19,6 @@
       "types": "./dist/public-notifications.d.ts",
       "default": "./dist/public-notifications.js"
     },
-    "./public-organization-service-catalog": {
-      "types": "./dist/public-organization-service-catalog.d.ts",
-      "default": "./dist/public-organization-service-catalog.js"
-    },
     "./care-emergency-alert-records": {
       "types": "./dist/care-emergency-alert-records.d.ts",
       "default": "./dist/care-emergency-alert-records.js"

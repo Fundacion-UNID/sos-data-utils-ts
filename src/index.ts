@@ -18,7 +18,6 @@ export * from './location-proximity.js';
 export * from './multichannel-permission-forms.js';
 export * from './multichannel-operation-schemas.js';
 export * from './schema-org-claims.js';
-export * from './public-organization-service-catalog.js';
 export * from './secure-message-envelope.js';
 export * from './directed-message-delivery.js';
 export * from './encounter-communication-audience.js';

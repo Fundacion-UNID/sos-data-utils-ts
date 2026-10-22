@@ -1,30 +1,4 @@
-# Public organization service catalog and communication identity
-
-## Canonical public catalog
-
-The public catalog is Schema.org-first. Its canonical graph contains a legal
-`Organization`, its department `Organization` records, the public `Place`
-records where a service is available, and the public `Service` records offered
-there. A caller saying “location” therefore means a Schema.org `Place` in this
-contract. No FHIR resource is created by this builder.
-
-`buildPublicOrganizationServiceCatalog(...)` emits deterministic flat claims
-for those records plus a DCAT `Dataset` descriptor. Publication is explicit:
-the organization, department, Place and Service must all be public, and a
-public Service must reference at least one public Place in its own department.
-Private and unknown references fail closed instead of leaking into the public
-catalog.
-
-The descriptor carries the publisher, jurisdiction, sector, version,
-modification time, media type and server-owned access URL. Marketplace and BFF
-caches use `evaluateOrganizationCatalogCache(...)` to reuse a fresh copy,
-revalidate a stale copy, fetch a newer version, evict a withdrawn dataset, and
-reject rollback or publisher/dataset mismatches.
-
-Schedules, Slots, Appointments, subjects and clinical records do not belong in
-this dataset. A later adapter may translate the neutral graph to FHIR
-`Organization`, `Location` and `HealthcareService` using the FHIR utilities,
-but that projection is not part of the current public-catalog write.
+# Organization departments, services and communication identity
 
 ## Public marketplace graph
 
@@ -35,13 +9,19 @@ objects:
 legal Organization
   -> department/subOrganization (Schema.org Organization; FHIR Organization.partOf)
        -> offered Service[] (Schema.org)
-            -> Place[] (Schema.org Place with GeoCoordinates)
+            <-> one HealthcareService per Service
+                 -> Schedule[] -> Slot[]
+            -> Location[] (Schema.org Place with GeoCoordinates)
        -> professional Group[] (each Group belongs to this department only)
 ```
 
-The department remains the canonical Schema.org Organization. For example, one
-department can offer blood donation and plasma donation without creating two
-communication identities. Scheduling remains a separate professional workflow.
+The department remains the canonical Schema.org/FHIR Organization. Each offered
+Schema.org `Service` has its own `sameAs` reference to an independent FHIR
+`HealthcareService`. For example, one Blood Banking department can offer blood
+donation and plasma donation without creating two communication identities,
+while each service keeps its own Schedule, Slot duration and Location.
+`Appointment`, `Encounter` and `ServiceRequest` reference the applicable service,
+not an aggregate department service.
 
 `buildOrganizationServiceCatalogEntry(...)` returns one JSON:API data entry.
 Its UUID is the entry `id`; its versioned `type` is
@@ -76,15 +56,18 @@ FHIR `HealthcareService.type`, clinical specialty and Schema.org department
 
 ## Places and governed images
 
-Each department can publish multiple Schema.org Places with address and
-optional coordinates. A later profile may attach governed public images.
+Each department can publish multiple Schema.org Places. Each Place retains its
+FHIR Location reference, coordinates and zero or more PNG/JPEG ImageObjects.
 Department logos and public images use the same immutable object reference,
 MIME type and SHA-256 contract.
 
-A public extraction/donation point is a Schema.org `Place`. Independently
-identifiable rooms, booths, chairs or beds may be child Places whose
-`containedInPlace` references that point. Schedules and Slots are not stored as
-properties of this catalog.
+A public extraction/donation point is a Schema.org `Place` and FHIR `Location`.
+Independently reservable rooms, booths, chairs or beds are separate child
+Places whose `containedInPlace` references that point and whose FHIR Locations
+use `partOf`. They may clone the same coordinates and public images, but retain
+different identifiers so each can have its own Schedule and Slots. A Schedule
+belongs to the applicable HealthcareService and resource actors; it is not
+stored as a property of the department catalog entry.
 
 Equipment is not represented as another Place or Service. An apheresis machine
 is a FHIR `Device` and can join the child Location and PractitionerRole in the

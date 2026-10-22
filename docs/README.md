@@ -17,9 +17,8 @@ area relevant to the workflow being implemented or reviewed.
 
 ## Organizations, services and authority
 
-- [Public organization service catalog and communication identity](ORGANIZATION_SERVICE_CATALOG.md)
-  — Schema.org Organization, Place and Service publication, DCAT discovery,
-  cache rules and the separate professional communication boundary.
+- [Organization departments, services and communication identity](ORGANIZATION_SERVICE_CATALOG.md)
+  — department, service, place, professional Group and communication roles.
 - [Organization-scoped resource identities](ORGANIZATION_SCOPED_RESOURCE_IDENTITIES.md)
   — stable identities for organization-owned resources.
 - [Organization subject-Group access](ORGANIZATION_SUBJECT_GROUP_ACCESS.md) —

@@ -3,11 +3,6 @@
 
 ## Unreleased
 
-- Add the Schema.org-first public organization service catalog: explicit
-  Organization, department, Place and Service publication; flat claims; a DCAT
-  discovery descriptor; and fail-closed cache refresh, withdrawal and rollback
-  decisions. FHIR projection and scheduling remain outside this contract.
-
 - Add executable public notification dataset, Markdown composition, bounded
   image/PDF attachment and subscriber-side delivery-decision contracts for the
   public alert MVP, including simple dog/cat blood-donation datasets, while
