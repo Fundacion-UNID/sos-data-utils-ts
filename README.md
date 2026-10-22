@@ -79,6 +79,12 @@ compatibility aliases for these APIs.
 See [Location and subject discovery](docs/LOCATION_AND_SUBJECT_DISCOVERY.md)
 for the canonical flat-claim, species and authorization boundaries.
 
+The public organization catalog is available through
+`sos-data-utils-ts/public-organization-service-catalog`. It publishes only
+explicitly public Schema.org Organization, Place and Service claims, with a
+DCAT discovery descriptor and deterministic cache decisions. It does not emit
+FHIR resources, schedules, appointments or private organization structure.
+
 The package boundary is maintained in
 [docs/SDK_LAYERING.md](docs/SDK_LAYERING.md). This repository defines data
 shapes, deterministic builders and validators only. Runtime orchestration,
