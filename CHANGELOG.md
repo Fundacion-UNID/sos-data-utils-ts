@@ -3,10 +3,15 @@
 
 ## Unreleased
 
+## 0.6.16 - 2026-10-22
+
 - Add executable public notification dataset, Markdown composition, bounded
   image/PDF attachment and subscriber-side delivery-decision contracts for the
   public alert MVP, including simple dog/cat blood-donation datasets, while
   keeping addressed care-transition authority separate.
+- Add an explicit read-only migration for checksum-valid historical animal
+  card DIDs. It requires the stored NCBI taxonomy claim, derives the current
+  species-bound identifier and remains unavailable to new-write validation.
 
 ## 0.6.14 - 2026-10-20
 

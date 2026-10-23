@@ -6,6 +6,7 @@ import {
   ANIMAL_CARD_INTEROPERABILITY_EXAMPLES,
   NCBI_TAXONOMY_SYSTEM,
   buildNcbiTaxonomyUri,
+  migrateHistoricalAnimalCardDidWeb,
   parseAnimalCardNumber,
   parseAnimalCardDidWeb,
   readAnimalCardFromFlatClaims,
@@ -52,6 +53,39 @@ test('embeds species before the complete card number and cross-checks the extern
     ...animalClaims,
     [SchemaOrgOrganizationClaim.MemberAdditionalType]: buildNcbiTaxonomyUri('9685'),
   }), undefined)
+})
+
+test('migrates a checksum-valid historical split DID only when an explicit animal taxonomy is supplied', () => {
+  assert.deepEqual(
+    migrateHistoricalAnimalCardDidWeb(
+      'did:web:example.invalid:card:vetchain:72409:0961510852611267',
+      '9615',
+    ),
+    {
+      sourceCardDid: 'did:web:example.invalid:card:vetchain:72409:0961510852611267',
+      cardDid,
+      cardNumber21: '724090961510852611262',
+      jurisdictionCode5: '72409',
+      animalNumericId15: '096151085261126',
+      animalId16: '0961510852611262',
+      ncbiTaxonomyId: '9615',
+      speciesId7: '0009615',
+    },
+  )
+  assert.equal(
+    migrateHistoricalAnimalCardDidWeb(
+      'did:web:example.invalid:card:vetchain:72409:0961510852611268',
+      '9615',
+    ),
+    undefined,
+  )
+  assert.equal(
+    migrateHistoricalAnimalCardDidWeb(
+      'did:web:example.invalid:card:vetchain:72409:0961510852611267',
+      '9606',
+    ),
+    undefined,
+  )
 })
 
 test('parses the visible animal card number with the same explicit species context', () => {

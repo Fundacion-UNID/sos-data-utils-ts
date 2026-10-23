@@ -28,6 +28,11 @@ export type AnimalCardNumberIdentity = Readonly<{
   speciesId7: string
 }>
 
+export type HistoricalAnimalCardMigration = AnimalCardNumberIdentity & Readonly<{
+  sourceCardDid: string
+  cardDid: string
+}>
+
 /** Governed non-operational animal-card fixture shared by SOS, Vet and UHC tests. */
 export const ANIMAL_CARD_INTEROPERABILITY_EXAMPLES = Object.freeze({
   Dog: Object.freeze({
@@ -89,6 +94,54 @@ export function parseAnimalCardDidWeb(
       ncbiTaxonomyId: normalizedTaxonomyId,
       speciesId7,
       species: Object.freeze({ system: NCBI_TAXONOMY_SYSTEM, code: normalizedTaxonomyId }),
+    })
+  } catch {
+    return undefined
+  }
+}
+
+/**
+ * Converts the retired jurisdiction5 + animalId16 DID for read compatibility.
+ *
+ * This is deliberately separate from the canonical parser so historical
+ * identifiers cannot be accepted for new writes. The legacy checksum and the
+ * explicit animal taxonomy claim must both validate before a species-bound
+ * canonical DID is derived.
+ */
+export function migrateHistoricalAnimalCardDidWeb(
+  sourceCardDid: string,
+  ncbiTaxonomyId: string,
+): HistoricalAnimalCardMigration | undefined {
+  const source = String(sourceCardDid || '').trim()
+  const historical = source.match(
+    /^did:web:([A-Za-z0-9.-]+(?:%3A\d+)?):card:vetchain:(\d{5}):(\d{16})$/i,
+  )
+  if (!historical) return undefined
+  try {
+    const normalizedTaxonomyId = normalizeAnimalTaxonomyId(ncbiTaxonomyId)
+    const speciesId7 = normalizeSubjectSpeciesId7(normalizedTaxonomyId)
+    const jurisdictionCode5 = historical[2]
+    const historicalAnimalId16 = historical[3]
+    const animalNumericId15 = historicalAnimalId16.slice(0, 15)
+    const historicalCheckDigit = historicalAnimalId16.slice(15)
+    if (computeDammCheckDigit(`${jurisdictionCode5}${animalNumericId15}`) !== historicalCheckDigit) {
+      return undefined
+    }
+    const cardNumber20 = `${jurisdictionCode5}${animalNumericId15}`
+    const currentCheckDigit = computeDammCheckDigit(`${speciesId7}${cardNumber20}`)
+    const cardNumber21 = `${cardNumber20}${currentCheckDigit}`
+    const animalId16 = `${animalNumericId15}${currentCheckDigit}`
+    const cardDid = `did:web:${historical[1]}:card:vetchain:${speciesId7}:${cardNumber21}`
+    if (!parseAnimalCardDidWeb(cardDid, normalizedTaxonomyId)) return undefined
+    return Object.freeze({
+      sourceCardDid: source,
+      cardDid,
+      cardNumber21,
+      jurisdictionCode5,
+      animalNumericId15,
+      animalId16,
+      ncbiTaxonomyId: normalizedTaxonomyId,
+      speciesId7,
     })
   } catch {
     return undefined
