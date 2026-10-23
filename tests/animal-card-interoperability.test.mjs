@@ -7,6 +7,7 @@ import {
   NCBI_TAXONOMY_SYSTEM,
   buildNcbiTaxonomyUri,
   migrateHistoricalAnimalCardDidWeb,
+  parseNcbiTaxonomyUri,
   parseAnimalCardNumber,
   parseAnimalCardDidWeb,
   readAnimalCardFromFlatClaims,
@@ -86,6 +87,18 @@ test('migrates a checksum-valid historical split DID only when an explicit anima
     ),
     undefined,
   )
+})
+
+test('reads the governed historical HTTPS OBO taxonomy form without changing canonical writes', () => {
+  assert.equal(
+    parseNcbiTaxonomyUri('https://purl.obolibrary.org/obo/NCBITaxon_9615'),
+    '9615',
+  )
+  assert.equal(
+    parseNcbiTaxonomyUri(['https://purl.obolibrary.org/obo/NCBITaxon_9615']),
+    '9615',
+  )
+  assert.equal(buildNcbiTaxonomyUri('9615'), 'http://purl.obolibrary.org/obo/NCBITaxon_9615')
 })
 
 test('parses the visible animal card number with the same explicit species context', () => {

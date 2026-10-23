@@ -3,6 +3,12 @@
 
 ## Unreleased
 
+## 0.6.17 - 2026-10-22
+
+- Read historical NCBI OBO taxonomy claims from either the HTTP or HTTPS URI
+  form and from a single-value projection while retaining the HTTP form for
+  canonical writes. No species is inferred from a card identifier.
+
 ## 0.6.16 - 2026-10-22
 
 - Add executable public notification dataset, Markdown composition, bounded

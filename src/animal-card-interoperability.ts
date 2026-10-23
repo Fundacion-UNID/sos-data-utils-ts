@@ -47,10 +47,11 @@ export function buildNcbiTaxonomyUri(ncbiTaxonomyId: string): string {
   return `${NCBI_TAXONOMY_OBO_URI_PREFIX}${normalizeAnimalTaxonomyId(ncbiTaxonomyId)}`
 }
 
-/** Reads only the governed OBO form used in subject flat claims. */
+/** Reads the governed OBO form, including historical HTTPS/single-value projections. */
 export function parseNcbiTaxonomyUri(value: unknown): string | undefined {
-  if (typeof value !== 'string') return undefined
-  const match = value.trim().match(/^http:\/\/purl\.obolibrary\.org\/obo\/NCBITaxon_([1-9]\d{0,6})$/)
+  const scalar = Array.isArray(value) && value.length === 1 ? value[0] : value
+  if (typeof scalar !== 'string') return undefined
+  const match = scalar.trim().match(/^https?:\/\/purl\.obolibrary\.org\/obo\/NCBITaxon_([1-9]\d{0,6})$/i)
   if (!match) return undefined
   try {
     return normalizeAnimalTaxonomyId(match[1])
