@@ -1,6 +1,7 @@
 // Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0.
 export * from './bff-api.js';
 export * from './public-notifications.js';
+export * from './public-health-statistics-policy.js';
 export * from './care-emergency-alert-records.js';
 export * from './clinical-terminology.js';
 export * from './continuity-service-capabilities.js';
