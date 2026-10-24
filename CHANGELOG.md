@@ -3,6 +3,12 @@
 
 ## Unreleased
 
+- Add the shared policy for identifier-free public clinical statistics across
+  human and animal sectors. Keep automatic qualified-professional publication
+  at certification separate from both later individual reporting of verified
+  professional-origin records and code-only individual self-reports for
+  epidemic and pandemic surveillance.
+
 ## 0.6.17 - 2026-10-22
 
 - Read historical NCBI OBO taxonomy claims from either the HTTP or HTTPS URI
