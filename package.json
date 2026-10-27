@@ -1,6 +1,6 @@
 {
   "name": "sos-data-utils-ts",
-  "version": "0.6.18",
+  "version": "0.6.19",
   "description": "Product-neutral SOS channel and BFF contract utilities",
   "license": "Apache-2.0",
   "type": "module",
@@ -34,6 +34,10 @@
     "./portal-access-profiles": {
       "types": "./dist/portal-access-profiles.data.d.ts",
       "default": "./dist/portal-access-profiles.data.js"
+    },
+    "./professional-demo-capabilities": {
+      "types": "./dist/professional-demo-capabilities.d.ts",
+      "default": "./dist/professional-demo-capabilities.js"
     },
     "./clinical-terminology": {
       "types": "./dist/clinical-terminology.d.ts",

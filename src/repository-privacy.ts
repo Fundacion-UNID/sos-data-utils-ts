@@ -2,6 +2,12 @@
 export const REPOSITORY_SAFE_EXAMPLES = Object.freeze({
   tenantId: 'example-tenant',
   resourceUuid: '00000000-0000-4000-8000-000000000001',
+  demoOrganizationUuids: Object.freeze({
+    healthCare: '00000000-0000-4000-8000-000000000101',
+    animalCare: '00000000-0000-4000-8000-000000000102',
+    publicHealth: '00000000-0000-4000-8000-000000000103',
+    publicSafety: '00000000-0000-4000-8000-000000000104',
+  }),
   phoneE164: '+12025550123',
   personFamilyName: 'Doe',
   individualGivenName: 'Jane',

@@ -1,8 +1,13 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
-## Unreleased
+## 0.6.19 - 2026-10-27
 
+- Define one shared portal shell across production, Test Network and Demo,
+  with explicit production, test-network and mock ledger adapters.
+- Publish four stable synthetic sector organizations and the ten-profile
+  Professional Demo capability matrix, including negative authorization for
+  administrative, assistant and public-safety profiles.
 - Add the shared policy for identifier-free public clinical statistics across
   human and animal sectors. Keep automatic qualified-professional publication
   at certification separate from both later individual reporting of verified

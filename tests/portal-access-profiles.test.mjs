@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
   SOSCHAIN_DEMO_DEPARTMENTS,
+  SOSCHAIN_DEMO_ORGANIZATIONS,
   SOSCHAIN_PORTAL_ACCESS_MODES,
   SOSCHAIN_PROFESSIONAL_DEMO_PROFILES,
   SoschainProfessionalDemoProfileIds,
@@ -33,6 +34,11 @@ test('publishes explicit real, test-network and preloaded-demo portal modes', ()
   assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'partner')?.dataKind, 'real')
   assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'test-network')?.dataKind, 'synthetic-persistent')
   assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'demo')?.dataKind, 'synthetic-resettable')
+  assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'personal')?.ledgerKind, 'production')
+  assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'partner')?.ledgerKind, 'production')
+  assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'test-network')?.ledgerKind, 'test-network')
+  assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'demo')?.ledgerKind, 'mock')
+  assert.equal(new Set(SOSCHAIN_PORTAL_ACCESS_MODES.map(({ portalShell }) => portalShell)).size, 1)
 })
 
 test('publishes every priority health-care and public-safety MVP profile without granting authority', () => {
@@ -61,4 +67,11 @@ test('keeps emergency departments as operational demo context rather than author
   assert.deepEqual(SOSCHAIN_DEMO_DEPARTMENTS.map(({ sector }) => sector), enabledProfessionalDemoSectors)
   assert.ok(SOSCHAIN_DEMO_DEPARTMENTS.every(({ grantsAuthority }) => grantsAuthority === false))
   assert.ok(SOSCHAIN_PROFESSIONAL_DEMO_PROFILES.every(({ grantsAuthority }) => grantsAuthority === false))
+})
+
+test('publishes one stable synthetic organization URN per demo sector without granting authority', () => {
+  assert.deepEqual(SOSCHAIN_DEMO_ORGANIZATIONS.map(({ sector }) => sector), enabledProfessionalDemoSectors)
+  assert.equal(new Set(SOSCHAIN_DEMO_ORGANIZATIONS.map(({ organizationUrn }) => organizationUrn)).size, enabledProfessionalDemoSectors.length)
+  assert.ok(SOSCHAIN_DEMO_ORGANIZATIONS.every(({ organizationUrn }) => organizationUrn.startsWith('urn:uuid:')))
+  assert.ok(SOSCHAIN_DEMO_ORGANIZATIONS.every(({ grantsAuthority }) => grantsAuthority === false))
 })

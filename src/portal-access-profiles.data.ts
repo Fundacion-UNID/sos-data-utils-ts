@@ -5,6 +5,7 @@ import {
   EmergencyProfessionalRoleIds,
   EmergencyProfessionalRoles,
 } from './emergency-professional-roles.js'
+import { REPOSITORY_SAFE_EXAMPLES } from './repository-privacy.js'
 
 /** Entry paths shown by SOSChain portals. A path never grants clinical access. */
 export const SoschainPortalAccessModeIds = Object.freeze({
@@ -18,11 +19,15 @@ export type SoschainPortalAccessModeId =
   typeof SoschainPortalAccessModeIds[keyof typeof SoschainPortalAccessModeIds]
 
 export type SoschainPortalDataKind = 'real' | 'synthetic-persistent' | 'synthetic-resettable'
+export type SoschainPortalLedgerKind = 'production' | 'test-network' | 'mock'
 
 export type SoschainPortalAccessMode = Readonly<{
   id: SoschainPortalAccessModeId
   audience: 'personal' | 'professional' | 'both'
+  /** All modes render the same portal; only adapters and authorized data differ. */
+  portalShell: 'shared'
   dataKind: SoschainPortalDataKind
+  ledgerKind: SoschainPortalLedgerKind
   requiresTrustedLogin: boolean
   resetPolicy: 'provider-managed' | 'test-network-managed' | 'periodic-demo-reset'
 }>
@@ -35,28 +40,36 @@ export const SOSCHAIN_PORTAL_ACCESS_MODES: readonly SoschainPortalAccessMode[] =
   Object.freeze({
     id: SoschainPortalAccessModeIds.Personal,
     audience: 'personal',
+    portalShell: 'shared',
     dataKind: 'real',
+    ledgerKind: 'production',
     requiresTrustedLogin: true,
     resetPolicy: 'provider-managed',
   }),
   Object.freeze({
     id: SoschainPortalAccessModeIds.Partner,
     audience: 'professional',
+    portalShell: 'shared',
     dataKind: 'real',
+    ledgerKind: 'production',
     requiresTrustedLogin: true,
     resetPolicy: 'provider-managed',
   }),
   Object.freeze({
     id: SoschainPortalAccessModeIds.TestNetwork,
     audience: 'both',
+    portalShell: 'shared',
     dataKind: 'synthetic-persistent',
+    ledgerKind: 'test-network',
     requiresTrustedLogin: true,
     resetPolicy: 'test-network-managed',
   }),
   Object.freeze({
     id: SoschainPortalAccessModeIds.Demo,
     audience: 'both',
+    portalShell: 'shared',
     dataKind: 'synthetic-resettable',
+    ledgerKind: 'mock',
     requiresTrustedLogin: false,
     resetPolicy: 'periodic-demo-reset',
   }),
@@ -252,6 +265,32 @@ export const SOSCHAIN_DEMO_DEPARTMENTS: readonly SoschainDemoDepartment[] = Obje
     titleEn: 'Emergency response unit',
     grantsAuthority: false,
   }),
+])
+
+export type SoschainDemoOrganization = Readonly<{
+  sector: SoschainProfessionalDemoSectorId
+  organizationUrn: `urn:uuid:${string}`
+  titleEn: string
+  grantsAuthority: false
+}>
+
+const demoOrganization = (
+  sector: SoschainProfessionalDemoSectorId,
+  uuid: string,
+  titleEn: string,
+): SoschainDemoOrganization => Object.freeze({
+  sector,
+  organizationUrn: `urn:uuid:${uuid}`,
+  titleEn,
+  grantsAuthority: false,
+})
+
+/** Stable synthetic organizations used only by the resettable Demo adapter. */
+export const SOSCHAIN_DEMO_ORGANIZATIONS: readonly SoschainDemoOrganization[] = Object.freeze([
+  demoOrganization(SoschainProfessionalDemoSectorIds.HealthCare, REPOSITORY_SAFE_EXAMPLES.demoOrganizationUuids.healthCare, 'Example health-care organization'),
+  demoOrganization(SoschainProfessionalDemoSectorIds.AnimalCare, REPOSITORY_SAFE_EXAMPLES.demoOrganizationUuids.animalCare, 'Example animal-care organization'),
+  demoOrganization(SoschainProfessionalDemoSectorIds.PublicHealth, REPOSITORY_SAFE_EXAMPLES.demoOrganizationUuids.publicHealth, 'Example public-health organization'),
+  demoOrganization(SoschainProfessionalDemoSectorIds.PublicSafety, REPOSITORY_SAFE_EXAMPLES.demoOrganizationUuids.publicSafety, 'Example public-safety organization'),
 ])
 
 /** Returns only currently enabled profiles for an exact governed sector. */
