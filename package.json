@@ -1,6 +1,6 @@
 {
   "name": "sos-data-utils-ts",
-  "version": "0.6.19",
+  "version": "0.6.20",
   "description": "Product-neutral SOS channel and BFF contract utilities",
   "license": "Apache-2.0",
   "type": "module",
@@ -38,6 +38,14 @@
     "./professional-demo-capabilities": {
       "types": "./dist/professional-demo-capabilities.d.ts",
       "default": "./dist/professional-demo-capabilities.js"
+    },
+    "./demo-member-lifecycle": {
+      "types": "./dist/demo-member-lifecycle.d.ts",
+      "default": "./dist/demo-member-lifecycle.js"
+    },
+    "./portal-demo-fixtures": {
+      "types": "./dist/portal-demo-fixtures.d.ts",
+      "default": "./dist/portal-demo-fixtures.js"
     },
     "./clinical-terminology": {
       "types": "./dist/clinical-terminology.d.ts",
@@ -201,7 +209,7 @@
   },
   "private": false,
   "dependencies": {
-    "fhir-data-utils-ts": "0.6.23",
+    "fhir-data-utils-ts": "0.6.24",
     "gdc-common-utils-ts": "2.9.21"
   },
   "publishConfig": {

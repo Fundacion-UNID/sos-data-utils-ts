@@ -21,6 +21,8 @@ test('accepts only governed examples in strict templates and tests', () => {
   assert.deepEqual(inspectRepositoryPrivacy({ path: 'env.example', text, strictExamples: true }), [])
   assert.doesNotThrow(() => assertRepositoryPrivacy([{ path: 'env.example', text, strictExamples: true }]))
   assert.match(REPOSITORY_SAFE_EXAMPLES.organizationBusinessNumber, /^\d{9}$/u)
+  assert.match(REPOSITORY_SAFE_EXAMPLES.individualEmail, /@example\.invalid$/u)
+  assert.match(REPOSITORY_SAFE_EXAMPLES.firstContactEmail, /@example\.invalid$/u)
   assert.deepEqual(inspectRepositoryPrivacy({
     path: 'fhir-example.test.mjs',
     text: 'http://loinc.org|882-1',

@@ -6,6 +6,7 @@ import {
   EmergencyProfessionalRoles,
 } from './emergency-professional-roles.js'
 import { REPOSITORY_SAFE_EXAMPLES } from './repository-privacy.js'
+import { MultichannelPermissionRoleClaims } from './multichannel-permission-forms.js'
 
 /** Entry paths shown by SOSChain portals. A path never grants clinical access. */
 export const SoschainPortalAccessModeIds = Object.freeze({
@@ -96,6 +97,7 @@ export const SoschainProfessionalDemoProfileIds = Object.freeze({
   Firefighter: EmergencyProfessionalRoleIds.Firefighter,
   PoliceOfficer: EmergencyProfessionalRoleIds.PoliceOfficer,
   Lifeguard: EmergencyProfessionalRoleIds.Lifeguard,
+  Researcher: 'researcher',
 } as const)
 
 export type SoschainProfessionalDemoProfileId =
@@ -199,6 +201,13 @@ export const SOSCHAIN_PROFESSIONAL_DEMO_PROFILES: readonly SoschainProfessionalD
     SoschainProfessionalDemoSectorIds.PublicHealth,
     HealthcareActorRoles.MedicalSecretary,
     'Administrative assistant',
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.Researcher,
+    SoschainProfessionalDemoSectorIds.PublicHealth,
+    MultichannelPermissionRoleClaims.Researcher,
+    'Researcher',
     true,
   ),
   demoProfile(

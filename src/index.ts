@@ -13,6 +13,8 @@ export * from './emergency-professional-roles.js';
 export * from './demo-identities.js';
 export * from './portal-access-profiles.data.js';
 export * from './professional-demo-capabilities.js';
+export * from './portal-demo-fixtures.js';
+export * from './demo-member-lifecycle.js';
 export * from './immunization-reminder-plan.js';
 export * from './immunization-flat-claims.js';
 export * from './jurisdictional-identifier-types.js';

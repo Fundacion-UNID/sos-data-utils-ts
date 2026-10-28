@@ -15,10 +15,11 @@ const expected = new Map([
   [SoschainProfessionalDemoProfileIds.Firefighter, ['emergency-minimum', 'none', false]],
   [SoschainProfessionalDemoProfileIds.PoliceOfficer, ['emergency-minimum', 'none', false]],
   [SoschainProfessionalDemoProfileIds.Lifeguard, ['emergency-minimum', 'none', false]],
+  [SoschainProfessionalDemoProfileIds.Researcher, ['none', 'none', false]],
 ])
 
-test('publishes the exact positive and negative capability projection for all ten Demo profiles', () => {
-  assert.equal(expected.size, 10)
+test('publishes the exact positive and negative capability projection for all eleven Demo profiles', () => {
+  assert.equal(expected.size, 11)
   for (const [profileId, [healthScope, clinicalWriteScope, canRequestBreakGlass]] of expected) {
     const capabilities = resolveProfessionalDemoCapabilities(profileId)
     assert.equal(capabilities.healthScope, healthScope, profileId)
@@ -26,6 +27,14 @@ test('publishes the exact positive and negative capability projection for all te
     assert.equal(capabilities.canRequestBreakGlass, canRequestBreakGlass, profileId)
     assert.equal(capabilities.grantsRealAuthority, false, profileId)
   }
+})
+
+test('keeps the Researcher in governed research workflows without subject or emergency access', () => {
+  const capabilities = resolveProfessionalDemoCapabilities(SoschainProfessionalDemoProfileIds.Researcher)
+  assert.equal(capabilities.workflowFamily, 'research-governed')
+  assert.equal(capabilities.healthScope, 'none')
+  assert.equal(capabilities.communicationLaunchSurface, 'none')
+  assert.equal(capabilities.sections.every(({ mode }) => mode === 'unavailable'), true)
 })
 
 test('keeps administrative and assistant profiles outside encounter and communication writes', () => {

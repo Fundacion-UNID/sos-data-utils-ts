@@ -9,7 +9,7 @@ export type ProfessionalDemoCapabilities = Readonly<{
   grantsRealAuthority: false
   canRequestBreakGlass: boolean
   healthScope: 'ips' | 'emergency-minimum' | 'none'
-  workflowFamily: 'clinical-encounter' | 'transport-or-close' | 'assisted-read-only' | 'operational-encounter' | 'shared-vaccination-verification' | 'administrative-read-only' | 'unclassified'
+  workflowFamily: 'clinical-encounter' | 'transport-or-close' | 'assisted-read-only' | 'operational-encounter' | 'shared-vaccination-verification' | 'administrative-read-only' | 'research-governed' | 'unclassified'
   clinicalWriteScope: 'attested-record' | 'none'
   communicationLaunchSurface: 'encounter' | 'none'
   sections: readonly Readonly<{ id: typeof ProfessionalDemoSectionIds[keyof typeof ProfessionalDemoSectionIds]; mode: ProfessionalDemoSectionMode }>[]
@@ -29,5 +29,6 @@ export function resolveProfessionalDemoCapabilities(profileId: SoschainProfessio
   if (operationalProfiles.has(profileId)) return result({ canRequestBreakGlass: false, healthScope: 'emergency-minimum', workflowFamily: 'operational-encounter', clinicalWriteScope: 'none', communicationLaunchSurface: 'encounter', sections: [section('journey', 'record-handover'), section('family', 'request-authorized-communication'), section('health', 'read-emergency-minimum')] })
   if (profileId === SoschainProfessionalDemoProfileIds.PoliceOfficer) return result({ canRequestBreakGlass: false, healthScope: 'emergency-minimum', workflowFamily: 'shared-vaccination-verification', clinicalWriteScope: 'none', communicationLaunchSurface: 'encounter', sections: [section('journey', 'record-handover'), section('family', 'request-authorized-communication'), section('health', 'verify-shared-vaccinations')] })
   if (administrativeProfiles.has(profileId)) return result({ canRequestBreakGlass: false, healthScope: 'none', workflowFamily: 'administrative-read-only', clinicalWriteScope: 'none', communicationLaunchSurface: 'none', sections: [section('journey', 'unavailable'), section('family', 'unavailable'), section('health', 'unavailable')] })
+  if (profileId === SoschainProfessionalDemoProfileIds.Researcher) return result({ canRequestBreakGlass: false, healthScope: 'none', workflowFamily: 'research-governed', clinicalWriteScope: 'none', communicationLaunchSurface: 'none', sections: [section('journey', 'unavailable'), section('family', 'unavailable'), section('health', 'unavailable')] })
   return result({ canRequestBreakGlass: false, healthScope: 'none', workflowFamily: 'unclassified', clinicalWriteScope: 'none', communicationLaunchSurface: 'none', sections: [section('journey', 'unavailable'), section('family', 'unavailable'), section('health', 'unavailable')] })
 }

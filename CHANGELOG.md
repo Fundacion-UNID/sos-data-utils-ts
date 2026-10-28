@@ -1,6 +1,18 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
+## 0.6.20 - 2026-10-27
+
+- Export the typed Personal household and Professional emergency Demo fixtures
+  once for reuse by portals, SDKs and gateways. Compose clinical encounter
+  state from the neutral FHIR fixture instead of repeating portal literals.
+- Add Researcher as the eleventh Professional Demo profile, confined to
+  governed research workflows without card, clinical or emergency authority.
+- Export the typed Personal Demo member invitation lifecycle, including fixed
+  role-to-access projections, verified invitee acceptance, owner-only
+  suspension/reactivation/revocation and terminal revocation. Reuse governed
+  safe example emails instead of portal-local literals.
+
 ## 0.6.19 - 2026-10-27
 
 - Define one shared portal shell across production, Test Network and Demo,
