@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+## 0.6.21 - 2026-11-03
+
 - Define a product-neutral subject-card provider advertisement with a stable
   sector index DID
   identity, supported subject kinds, directory/create/import operations and a
