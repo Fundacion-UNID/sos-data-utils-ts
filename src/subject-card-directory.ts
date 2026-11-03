@@ -22,9 +22,9 @@ export type SubjectCardProviderOperation =
   typeof SUBJECT_CARD_PROVIDER_OPERATIONS[keyof typeof SUBJECT_CARD_PROVIDER_OPERATIONS]
 
 export type SubjectCardProviderDescriptor = Readonly<{
-  /** Stable public identity used for selection; normally the provider DID. */
+  /** Stable public identity used for selection; always the sector index DID. */
   providerId: string
-  providerDid: string
+  indexProviderDid: string
   displayName: string
   /** Complete public tenant route. It contains no credentials or browser authority. */
   directoryRoute: string
@@ -71,21 +71,16 @@ const PROVIDER_OPERATIONS = new Set<SubjectCardProviderOperation>(Object.values(
 
 /** Validates one data-space provider advertisement without granting write authority. */
 export function createSubjectCardProviderDescriptor(input: Readonly<{
-  providerId?: string
-  providerDid: string
+  indexProviderDid: string
   displayName: string
   directoryRoute: string
   subjectKinds: readonly ('human' | 'animal')[]
   operations: readonly SubjectCardProviderOperation[]
   providerCode9?: string
 }>): SubjectCardProviderDescriptor {
-  const providerDid = required(input.providerDid, 'providerDid')
-  if (!/^did:[a-z0-9]+:[A-Za-z0-9._:%-]+(?:[:/][A-Za-z0-9._:%/?#=-]+)*$/u.test(providerDid)) {
-    throw new TypeError('providerDid must be one public DID.')
-  }
-  const providerId = optional(input.providerId) || providerDid
-  if (!/^[A-Za-z0-9._~:-]{1,200}$/u.test(providerId)) {
-    throw new TypeError('providerId must be one opaque public service identifier.')
+  const indexProviderDid = required(input.indexProviderDid, 'indexProviderDid')
+  if (!/^did:[a-z0-9]+:[A-Za-z0-9._:%-]+(?:[:/][A-Za-z0-9._:%/?#=-]+)*$/u.test(indexProviderDid)) {
+    throw new TypeError('indexProviderDid must be one public DID.')
   }
   const displayName = required(input.displayName, 'displayName')
   const route = new URL(required(input.directoryRoute, 'directoryRoute'))
@@ -113,8 +108,8 @@ export function createSubjectCardProviderDescriptor(input: Readonly<{
     throw new TypeError('providerCode9 must contain exactly nine digits for creation.')
   }
   return Object.freeze({
-    providerId,
-    providerDid,
+    providerId: indexProviderDid,
+    indexProviderDid,
     displayName,
     directoryRoute: route.toString().replace(/\/$/u, ''),
     subjectKinds: Object.freeze(subjectKinds),

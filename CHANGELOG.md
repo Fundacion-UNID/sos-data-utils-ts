@@ -3,7 +3,8 @@
 
 ## Unreleased
 
-- Define a product-neutral subject-card provider advertisement with stable DID
+- Define a product-neutral subject-card provider advertisement with a stable
+  sector index DID
   identity, supported subject kinds, directory/create/import operations and a
   canonical public tenant route. Creation advertisements require the public
   nine-digit provider namespace while credentials remain outside the contract.

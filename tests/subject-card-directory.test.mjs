@@ -93,7 +93,7 @@ test('does not expose product-prefixed or temporary compatibility names', async 
 
 test('describes a provider independently from subject kind and product brand', () => {
   const provider = createSubjectCardProviderDescriptor({
-    providerDid: REPOSITORY_SAFE_EXAMPLES.didWeb,
+    indexProviderDid: REPOSITORY_SAFE_EXAMPLES.didWeb,
     displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
     directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/${REPOSITORY_SAFE_EXAMPLES.sector}`,
     subjectKinds: ['animal', 'human'],
@@ -108,7 +108,7 @@ test('describes a provider independently from subject kind and product brand', (
 
 test('requires issuer metadata for creation and rejects unsafe provider routes', () => {
   const base = {
-    providerDid: REPOSITORY_SAFE_EXAMPLES.didWeb,
+    indexProviderDid: REPOSITORY_SAFE_EXAMPLES.didWeb,
     displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
     directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/${REPOSITORY_SAFE_EXAMPLES.sector}`,
     subjectKinds: ['animal'],
@@ -124,25 +124,25 @@ test('requires issuer metadata for creation and rejects unsafe provider routes',
   }), /HTTPS/)
 })
 
-test('keeps two subject services from the same provider DID independently selectable', () => {
+test('uses a distinct index DID for each human or animal sector index', () => {
   const shared = {
-    providerDid: REPOSITORY_SAFE_EXAMPLES.didWeb,
     displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
     operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Directory],
   }
   const human = createSubjectCardProviderDescriptor({
     ...shared,
-    providerId: 'provider-service-human',
+    indexProviderDid: `${REPOSITORY_SAFE_EXAMPLES.didWeb}:human-index`,
     directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/health-care`,
     subjectKinds: ['human'],
   })
   const animal = createSubjectCardProviderDescriptor({
     ...shared,
-    providerId: 'provider-service-animal',
+    indexProviderDid: `${REPOSITORY_SAFE_EXAMPLES.didWeb}:animal-index`,
     directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/animal-care`,
     subjectKinds: ['animal'],
   })
 
-  assert.equal(human.providerDid, animal.providerDid)
+  assert.equal(human.providerId, human.indexProviderDid)
+  assert.equal(animal.providerId, animal.indexProviderDid)
   assert.notEqual(human.providerId, animal.providerId)
 })
