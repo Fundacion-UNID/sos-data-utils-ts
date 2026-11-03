@@ -1,6 +1,12 @@
+const SAFE_TENANT_ID = 'example-tenant'
+const SAFE_DOMAIN = 'example.invalid'
+const SAFE_DID_WEB = `did:web:${SAFE_DOMAIN}:${SAFE_TENANT_ID}`
+const SAFE_ORGANIZATION_BUSINESS_NUMBER = '123456789'
+const SAFE_PROVIDER_CODE9 = '124020001'
+
 /** Governed, non-operational values for public examples, tests and templates. */
 export const REPOSITORY_SAFE_EXAMPLES = Object.freeze({
-  tenantId: 'example-tenant',
+  tenantId: SAFE_TENANT_ID,
   resourceUuid: '00000000-0000-4000-8000-000000000001',
   demoOrganizationUuids: Object.freeze({
     healthCare: '00000000-0000-4000-8000-000000000101',
@@ -21,15 +27,22 @@ export const REPOSITORY_SAFE_EXAMPLES = Object.freeze({
   firstContactPhoneDisplay: '+1 202-555-0101',
   secondContactPhoneE164: '+12025550102',
   secondContactPhoneDisplay: '+1 202-555-0102',
-  domain: 'example.invalid',
-  httpsBaseUrl: 'https://example.invalid',
+  domain: SAFE_DOMAIN,
+  httpsBaseUrl: `https://${SAFE_DOMAIN}`,
   workspaceRoot: '$HOME/path/to/workspace',
-  didWeb: 'did:web:example.invalid:example-tenant',
+  didWeb: SAFE_DID_WEB,
   organizationLegalName: 'Example Animal Care Organization',
-  organizationBusinessNumber: '123456789',
+  organizationBusinessNumber: SAFE_ORGANIZATION_BUSINESS_NUMBER,
   organizationIdentifierType: 'BN',
   countryIso2: 'CA',
   sector: 'animal-care',
+  subjectCardProviders: Object.freeze({
+    cardDidHost: SAFE_DOMAIN,
+    providerCode9: SAFE_PROVIDER_CODE9,
+    humanIndexDid: `${SAFE_DID_WEB}:human-index`,
+    animalIndexDid: `${SAFE_DID_WEB}:animal-index`,
+    secondAnimalIndexDid: `${SAFE_DID_WEB}:animal-index-two`,
+  }),
   organizationScopedResources: Object.freeze({
     organizationUrn: 'urn:cds-ca-bc:v1:organization:bn:123456789',
     departmentUuid: '00000000-0000-4000-8000-000000000010',

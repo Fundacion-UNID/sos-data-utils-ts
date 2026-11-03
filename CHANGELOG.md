@@ -10,6 +10,9 @@
   nine-digit provider namespace while credentials remain outside the contract.
   Creation metadata keeps the ICA-assigned `country3 + region2 + provider4`
   code separate from the sector index DID and its public card DID host.
+- Centralize the governed non-operational human and animal sector-index DIDs,
+  provider namespace and card DID host so package, portal and browser tests do
+  not repeat identity literals.
 
 ## 0.6.20 - 2026-10-27
 
