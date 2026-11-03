@@ -99,13 +99,13 @@ test('describes a provider independently from subject kind and product brand', (
     subjectKinds: ['animal', 'human'],
     operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Directory, SUBJECT_CARD_PROVIDER_OPERATIONS.Create],
     providerCode9: REPOSITORY_SAFE_EXAMPLES.organizationBusinessNumber,
-    cardDidHost: 'cards.example.invalid',
+    cardDidHost: REPOSITORY_SAFE_EXAMPLES.domain,
   })
 
   assert.equal(provider.providerId, REPOSITORY_SAFE_EXAMPLES.didWeb)
   assert.deepEqual(provider.subjectKinds, ['animal', 'human'])
   assert.deepEqual(provider.operations, ['directory', 'create'])
-  assert.equal(provider.cardDidHost, 'cards.example.invalid')
+  assert.equal(provider.cardDidHost, REPOSITORY_SAFE_EXAMPLES.domain)
 })
 
 test('requires issuer metadata for creation and rejects unsafe provider routes', () => {
