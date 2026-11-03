@@ -1,6 +1,19 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
+## Unreleased
+
+- Define a product-neutral subject-card provider advertisement with a stable
+  sector index DID
+  identity, supported subject kinds, directory/create/import operations and a
+  canonical public tenant route. Creation advertisements require the public
+  nine-digit provider namespace while credentials remain outside the contract.
+  Creation metadata keeps the ICA-assigned `country3 + region2 + provider4`
+  code separate from the sector index DID and its public card DID host.
+- Centralize the governed non-operational human and animal sector-index DIDs,
+  provider namespace and card DID host so package, portal and browser tests do
+  not repeat identity literals.
+
 ## 0.6.20 - 2026-10-27
 
 - Export the typed Personal household and Professional emergency Demo fixtures

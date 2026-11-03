@@ -23,6 +23,13 @@ test('accepts only governed examples in strict templates and tests', () => {
   assert.match(REPOSITORY_SAFE_EXAMPLES.organizationBusinessNumber, /^\d{9}$/u)
   assert.match(REPOSITORY_SAFE_EXAMPLES.individualEmail, /@example\.invalid$/u)
   assert.match(REPOSITORY_SAFE_EXAMPLES.firstContactEmail, /@example\.invalid$/u)
+  const cardProviders = REPOSITORY_SAFE_EXAMPLES.subjectCardProviders
+  assert.equal(cardProviders.cardDidHost, REPOSITORY_SAFE_EXAMPLES.domain)
+  assert.match(cardProviders.providerCode9, /^\d{9}$/u)
+  assert.notEqual(cardProviders.providerCode9, REPOSITORY_SAFE_EXAMPLES.organizationBusinessNumber)
+  assert.equal(cardProviders.humanIndexDid, `${REPOSITORY_SAFE_EXAMPLES.didWeb}:human-index`)
+  assert.equal(cardProviders.animalIndexDid, `${REPOSITORY_SAFE_EXAMPLES.didWeb}:animal-index`)
+  assert.equal(cardProviders.secondAnimalIndexDid, `${REPOSITORY_SAFE_EXAMPLES.didWeb}:animal-index-two`)
   assert.deepEqual(inspectRepositoryPrivacy({
     path: 'fhir-example.test.mjs',
     text: 'http://loinc.org|882-1',

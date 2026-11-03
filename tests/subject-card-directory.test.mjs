@@ -3,6 +3,8 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 
 import {
+  SUBJECT_CARD_PROVIDER_OPERATIONS,
+  createSubjectCardProviderDescriptor,
   createSubjectCardDirectoryEntry,
 } from '../dist/subject-card-directory.js'
 import { REPOSITORY_SAFE_EXAMPLES } from '../dist/repository-privacy.js'
@@ -87,4 +89,67 @@ test('does not expose product-prefixed or temporary compatibility names', async 
   const contract = await import('sos-data-utils-ts/subject-card-directory')
   assert.equal('createSoschainCardDirectoryEntry' in contract, false)
   assert.equal('SoschainCardDirectoryEntry' in contract, false)
+})
+
+test('describes a provider independently from subject kind and product brand', () => {
+  const provider = createSubjectCardProviderDescriptor({
+    indexProviderDid: REPOSITORY_SAFE_EXAMPLES.didWeb,
+    displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
+    directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/${REPOSITORY_SAFE_EXAMPLES.sector}`,
+    subjectKinds: ['animal', 'human'],
+    operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Directory, SUBJECT_CARD_PROVIDER_OPERATIONS.Create],
+    providerCode9: REPOSITORY_SAFE_EXAMPLES.organizationBusinessNumber,
+    cardDidHost: REPOSITORY_SAFE_EXAMPLES.domain,
+  })
+
+  assert.equal(provider.providerId, REPOSITORY_SAFE_EXAMPLES.didWeb)
+  assert.deepEqual(provider.subjectKinds, ['animal', 'human'])
+  assert.deepEqual(provider.operations, ['directory', 'create'])
+  assert.equal(provider.cardDidHost, REPOSITORY_SAFE_EXAMPLES.domain)
+})
+
+test('requires issuer metadata for creation and rejects unsafe provider routes', () => {
+  const base = {
+    indexProviderDid: REPOSITORY_SAFE_EXAMPLES.didWeb,
+    displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
+    directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/${REPOSITORY_SAFE_EXAMPLES.sector}`,
+    subjectKinds: ['animal'],
+  }
+  assert.throws(() => createSubjectCardProviderDescriptor({
+    ...base,
+    operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Create],
+  }), /providerCode9/)
+  assert.throws(() => createSubjectCardProviderDescriptor({
+    ...base,
+    operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Create],
+    providerCode9: REPOSITORY_SAFE_EXAMPLES.organizationBusinessNumber,
+  }), /cardDidHost/)
+  assert.throws(() => createSubjectCardProviderDescriptor({
+    ...base,
+    operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Directory],
+    directoryRoute: 'http://example.invalid/example-tenant/cds-CA/v1/animal-care',
+  }), /HTTPS/)
+})
+
+test('uses a distinct index DID for each human or animal sector index', () => {
+  const shared = {
+    displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
+    operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Directory],
+  }
+  const human = createSubjectCardProviderDescriptor({
+    ...shared,
+    indexProviderDid: `${REPOSITORY_SAFE_EXAMPLES.didWeb}:human-index`,
+    directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/health-care`,
+    subjectKinds: ['human'],
+  })
+  const animal = createSubjectCardProviderDescriptor({
+    ...shared,
+    indexProviderDid: `${REPOSITORY_SAFE_EXAMPLES.didWeb}:animal-index`,
+    directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/animal-care`,
+    subjectKinds: ['animal'],
+  })
+
+  assert.equal(human.providerId, human.indexProviderDid)
+  assert.equal(animal.providerId, animal.indexProviderDid)
+  assert.notEqual(human.providerId, animal.providerId)
 })
