@@ -1,6 +1,13 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
+## Unreleased
+
+- Define a product-neutral subject-card provider advertisement with stable DID
+  identity, supported subject kinds, directory/create/import operations and a
+  canonical public tenant route. Creation advertisements require the public
+  nine-digit provider namespace while credentials remain outside the contract.
+
 ## 0.6.20 - 2026-10-27
 
 - Export the typed Personal household and Professional emergency Demo fixtures
