@@ -32,6 +32,8 @@ export type SubjectCardProviderDescriptor = Readonly<{
   operations: readonly SubjectCardProviderOperation[]
   /** Public issuer namespace required only when the provider supports creation. */
   providerCode9?: string
+  /** Public did:web authority used for cards issued by this index. */
+  cardDidHost?: string
 }>
 
 type SubjectCardDirectoryEntryBase = Readonly<{
@@ -77,6 +79,7 @@ export function createSubjectCardProviderDescriptor(input: Readonly<{
   subjectKinds: readonly ('human' | 'animal')[]
   operations: readonly SubjectCardProviderOperation[]
   providerCode9?: string
+  cardDidHost?: string
 }>): SubjectCardProviderDescriptor {
   const indexProviderDid = required(input.indexProviderDid, 'indexProviderDid')
   if (!/^did:[a-z0-9]+:[A-Za-z0-9._:%-]+(?:[:/][A-Za-z0-9._:%/?#=-]+)*$/u.test(indexProviderDid)) {
@@ -107,6 +110,16 @@ export function createSubjectCardProviderDescriptor(input: Readonly<{
   if (operations.includes(SUBJECT_CARD_PROVIDER_OPERATIONS.Create) && !/^\d{9}$/u.test(providerCode9 || '')) {
     throw new TypeError('providerCode9 must contain exactly nine digits for creation.')
   }
+  const cardDidHost = optional(input.cardDidHost)?.toLowerCase()
+  if (operations.includes(SUBJECT_CARD_PROVIDER_OPERATIONS.Create) && !cardDidHost) {
+    throw new TypeError('cardDidHost is required for creation.')
+  }
+  if (cardDidHost) {
+    const host = new URL(`http://${cardDidHost}`)
+    if (host.host !== cardDidHost || host.pathname !== '/' || host.username || host.password || host.search || host.hash) {
+      throw new TypeError('cardDidHost must contain one public did:web host.')
+    }
+  }
   return Object.freeze({
     providerId: indexProviderDid,
     indexProviderDid,
@@ -115,6 +128,7 @@ export function createSubjectCardProviderDescriptor(input: Readonly<{
     subjectKinds: Object.freeze(subjectKinds),
     operations: Object.freeze(operations),
     ...(providerCode9 ? { providerCode9 } : {}),
+    ...(cardDidHost ? { cardDidHost } : {}),
   })
 }
 

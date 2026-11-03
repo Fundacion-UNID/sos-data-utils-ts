@@ -8,6 +8,8 @@
   identity, supported subject kinds, directory/create/import operations and a
   canonical public tenant route. Creation advertisements require the public
   nine-digit provider namespace while credentials remain outside the contract.
+  Creation metadata keeps the ICA-assigned `country3 + region2 + provider4`
+  code separate from the sector index DID and its public card DID host.
 
 ## 0.6.20 - 2026-10-27
 
