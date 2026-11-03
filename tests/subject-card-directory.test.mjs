@@ -123,3 +123,26 @@ test('requires issuer metadata for creation and rejects unsafe provider routes',
     directoryRoute: 'http://example.invalid/example-tenant/cds-CA/v1/animal-care',
   }), /HTTPS/)
 })
+
+test('keeps two subject services from the same provider DID independently selectable', () => {
+  const shared = {
+    providerDid: REPOSITORY_SAFE_EXAMPLES.didWeb,
+    displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
+    operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Directory],
+  }
+  const human = createSubjectCardProviderDescriptor({
+    ...shared,
+    providerId: 'provider-service-human',
+    directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/health-care`,
+    subjectKinds: ['human'],
+  })
+  const animal = createSubjectCardProviderDescriptor({
+    ...shared,
+    providerId: 'provider-service-animal',
+    directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/animal-care`,
+    subjectKinds: ['animal'],
+  })
+
+  assert.equal(human.providerDid, animal.providerDid)
+  assert.notEqual(human.providerId, animal.providerId)
+})
