@@ -4,6 +4,7 @@ export * from './public-notifications.js';
 export * from './public-health-statistics-policy.js';
 export * from './care-emergency-alert-records.js';
 export * from './clinical-terminology.js';
+export * from './clinical-document-shc.js';
 export * from './continuity-service-capabilities.js';
 export * from './cross-sector-access-policy.js';
 export * from './confidential-profile-index.js';

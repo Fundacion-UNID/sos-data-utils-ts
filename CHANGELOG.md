@@ -1,6 +1,14 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
+## Unreleased
+
+- Add the reusable SOS clinical-document Smart Health Card contract consumed
+  by personal and professional portals. Demo credentials remain explicitly
+  unsigned, accept runtime issuer metadata, preserve FHIR document subject and
+  author context, and round-trip standard numeric `shc:/` QR chunks without a
+  Vet-specific consumer import.
+
 ## 0.6.22 - 2026-11-04
 
 - Add normalized ISO 3166-1 `areaServed` coverage to subject-card index

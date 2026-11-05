@@ -51,6 +51,10 @@
       "types": "./dist/clinical-terminology.d.ts",
       "default": "./dist/clinical-terminology.js"
     },
+    "./clinical-document-shc": {
+      "types": "./dist/clinical-document-shc.d.ts",
+      "default": "./dist/clinical-document-shc.js"
+    },
     "./cross-sector-access-policy": {
       "types": "./dist/cross-sector-access-policy.d.ts",
       "default": "./dist/cross-sector-access-policy.js"
@@ -202,6 +206,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
+    "@types/pako": "2.0.4",
     "typescript": "^5.9.3"
   },
   "engines": {
@@ -210,7 +215,8 @@
   "private": false,
   "dependencies": {
     "fhir-data-utils-ts": "0.6.24",
-    "gdc-common-utils-ts": "2.9.21"
+    "gdc-common-utils-ts": "2.9.21",
+    "pako": "2.1.0"
   },
   "publishConfig": {
     "access": "public"
