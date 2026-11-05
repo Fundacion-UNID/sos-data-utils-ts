@@ -1,14 +1,12 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
-## Unreleased
+## 0.6.22 - 2026-11-04
 
 - Add normalized ISO 3166-1 `areaServed` coverage to subject-card index
   descriptors. An index cannot advertise card creation until at least one
   country is selected; directory-only legacy advertisements remain readable
   with an empty coverage list.
-
-## Unreleased
 
 ## 0.6.21 - 2026-11-03
 
