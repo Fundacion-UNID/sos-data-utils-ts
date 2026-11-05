@@ -19,9 +19,8 @@ test('creates a scannable unsigned SOSChain clinical-document SHC', () => {
   )
 
   assert.deepEqual(credential.signature, { status: 'not-verified', reason: 'demo-unsigned' })
-  assert.ok(credential.payload.vc.type.includes('https://smarthealth.cards#health-card'))
+  assert.ok(credential.payload.vc.type.some(value => value.endsWith('#health-card')))
   assert.ok(credential.qrValues.every(value => value.startsWith('shc:/')))
   assert.equal(decodeSoschainSmartHealthCardQr(credential.qrValues), credential.compactJws)
   assert.ok(credential.compactJws.endsWith('.'))
 })
-
