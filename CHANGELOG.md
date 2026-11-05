@@ -1,7 +1,7 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
-## Unreleased
+## 0.6.23 - 2026-11-05
 
 - Add the reusable SOS clinical-document Smart Health Card contract consumed
   by personal and professional portals. Demo credentials remain explicitly
