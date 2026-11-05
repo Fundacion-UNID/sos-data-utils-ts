@@ -97,6 +97,7 @@ test('describes a provider independently from subject kind and product brand', (
     displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
     directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/${REPOSITORY_SAFE_EXAMPLES.sector}`,
     subjectKinds: ['animal', 'human'],
+    areaServed: ['ca', 'US', 'CA'],
     operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Directory, SUBJECT_CARD_PROVIDER_OPERATIONS.Create],
     providerCode9: REPOSITORY_SAFE_EXAMPLES.organizationBusinessNumber,
     cardDidHost: REPOSITORY_SAFE_EXAMPLES.domain,
@@ -105,6 +106,7 @@ test('describes a provider independently from subject kind and product brand', (
   assert.equal(provider.providerId, REPOSITORY_SAFE_EXAMPLES.didWeb)
   assert.deepEqual(provider.subjectKinds, ['animal', 'human'])
   assert.deepEqual(provider.operations, ['directory', 'create'])
+  assert.deepEqual(provider.areaServed, ['CA', 'US'])
   assert.equal(provider.cardDidHost, REPOSITORY_SAFE_EXAMPLES.domain)
 })
 
@@ -114,6 +116,7 @@ test('requires issuer metadata for creation and rejects unsafe provider routes',
     displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
     directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/${REPOSITORY_SAFE_EXAMPLES.sector}`,
     subjectKinds: ['animal'],
+    areaServed: ['CA'],
   }
   assert.throws(() => createSubjectCardProviderDescriptor({
     ...base,
@@ -129,6 +132,21 @@ test('requires issuer metadata for creation and rejects unsafe provider routes',
     operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Directory],
     directoryRoute: 'http://example.invalid/example-tenant/cds-CA/v1/animal-care',
   }), /HTTPS/)
+})
+
+test('requires valid ISO country coverage before enabling index creation', () => {
+  const base = {
+    indexProviderDid: REPOSITORY_SAFE_EXAMPLES.didWeb,
+    displayName: REPOSITORY_SAFE_EXAMPLES.organizationLegalName,
+    directoryRoute: `${REPOSITORY_SAFE_EXAMPLES.httpsBaseUrl}/${REPOSITORY_SAFE_EXAMPLES.tenantId}/cds-CA/v1/${REPOSITORY_SAFE_EXAMPLES.sector}`,
+    subjectKinds: ['animal'],
+    operations: [SUBJECT_CARD_PROVIDER_OPERATIONS.Create],
+    providerCode9: REPOSITORY_SAFE_EXAMPLES.organizationBusinessNumber,
+    cardDidHost: REPOSITORY_SAFE_EXAMPLES.domain,
+  }
+  assert.throws(() => createSubjectCardProviderDescriptor(base), /areaServed/)
+  assert.throws(() => createSubjectCardProviderDescriptor({ ...base, areaServed: [] }), /areaServed/)
+  assert.throws(() => createSubjectCardProviderDescriptor({ ...base, areaServed: ['CAN'] }), /ISO 3166-1 alpha-2/)
 })
 
 test('uses a distinct index DID for each human or animal sector index', () => {

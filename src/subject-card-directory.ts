@@ -29,6 +29,8 @@ export type SubjectCardProviderDescriptor = Readonly<{
   /** Complete public tenant route. It contains no credentials or browser authority. */
   directoryRoute: string
   subjectKinds: readonly ('human' | 'animal')[]
+  /** ISO 3166-1 alpha-2 countries served by this exact index service. */
+  areaServed: readonly string[]
   operations: readonly SubjectCardProviderOperation[]
   /** Public issuer namespace required only when the provider supports creation. */
   providerCode9?: string
@@ -77,6 +79,7 @@ export function createSubjectCardProviderDescriptor(input: Readonly<{
   displayName: string
   directoryRoute: string
   subjectKinds: readonly ('human' | 'animal')[]
+  areaServed?: readonly string[]
   operations: readonly SubjectCardProviderOperation[]
   providerCode9?: string
   cardDidHost?: string
@@ -106,6 +109,14 @@ export function createSubjectCardProviderDescriptor(input: Readonly<{
   if (operations.length === 0 || operations.some(operation => !PROVIDER_OPERATIONS.has(operation))) {
     throw new TypeError('operations must contain a supported provider operation.')
   }
+  const areaServed = [...new Set((Array.isArray(input.areaServed) ? input.areaServed : [])
+    .map(country => String(country || '').trim().toUpperCase()))]
+  if (areaServed.some(country => !/^[A-Z]{2}$/u.test(country))) {
+    throw new TypeError('areaServed must contain ISO 3166-1 alpha-2 country codes.')
+  }
+  if (operations.includes(SUBJECT_CARD_PROVIDER_OPERATIONS.Create) && areaServed.length === 0) {
+    throw new TypeError('areaServed is required before enabling index creation.')
+  }
   const providerCode9 = optional(input.providerCode9)
   if (operations.includes(SUBJECT_CARD_PROVIDER_OPERATIONS.Create) && !/^\d{9}$/u.test(providerCode9 || '')) {
     throw new TypeError('providerCode9 must contain exactly nine digits for creation.')
@@ -126,6 +137,7 @@ export function createSubjectCardProviderDescriptor(input: Readonly<{
     displayName,
     directoryRoute: route.toString().replace(/\/$/u, ''),
     subjectKinds: Object.freeze(subjectKinds),
+    areaServed: Object.freeze(areaServed),
     operations: Object.freeze(operations),
     ...(providerCode9 ? { providerCode9 } : {}),
     ...(cardDidHost ? { cardDidHost } : {}),

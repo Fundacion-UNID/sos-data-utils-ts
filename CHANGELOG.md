@@ -3,6 +3,13 @@
 
 ## Unreleased
 
+- Add normalized ISO 3166-1 `areaServed` coverage to subject-card index
+  descriptors. An index cannot advertise card creation until at least one
+  country is selected; directory-only legacy advertisements remain readable
+  with an empty coverage list.
+
+## Unreleased
+
 ## 0.6.21 - 2026-11-03
 
 - Define a product-neutral subject-card provider advertisement with a stable
