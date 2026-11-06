@@ -1,6 +1,6 @@
 {
   "name": "sos-data-utils-ts",
-  "version": "0.6.23",
+  "version": "0.6.24",
   "description": "Product-neutral SOS channel and BFF contract utilities",
   "license": "Apache-2.0",
   "type": "module",
@@ -127,6 +127,10 @@
       "types": "./dist/subject-communication-group.d.ts",
       "default": "./dist/subject-communication-group.js"
     },
+    "./subject-conversation-chat": {
+      "types": "./dist/subject-conversation-chat.d.ts",
+      "default": "./dist/subject-conversation-chat.js"
+    },
     "./subject-encounter-access": {
       "types": "./dist/subject-encounter-access.d.ts",
       "default": "./dist/subject-encounter-access.js"
@@ -214,6 +218,7 @@
   },
   "private": false,
   "dependencies": {
+    "antifraud-data-utils-ts": "0.1.11",
     "fhir-data-utils-ts": "0.6.24",
     "gdc-common-utils-ts": "2.9.21",
     "pako": "2.1.0"

@@ -1,6 +1,17 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
+## 0.6.24 - 2026-11-06
+
+- Add the platform-neutral subject-conversation contract and deterministic
+  `IMessage`-compatible projection shared by ConnectHealth web and the planned
+  SOSChain Expo application. Text, audio, FHIR document, calendar, file and
+  call-audit entries retain typed metadata without creating a second message
+  store or granting UI-side authority.
+- Reuse the Antifraud organization/service index-update event so an EHR, CMS
+  or other service appears in its subject conversation with governed portal
+  references instead of as an unexplained local index mutation.
+
 ## 0.6.23 - 2026-11-05
 
 - Add the reusable SOS clinical-document Smart Health Card contract consumed
