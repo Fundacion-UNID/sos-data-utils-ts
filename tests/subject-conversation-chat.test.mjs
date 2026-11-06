@@ -4,7 +4,9 @@ import test from 'node:test'
 import {
   SubjectConversationContentKind,
   SubjectConversationDirection,
+  parseSubjectIndexUpdateConversationEvent,
   projectSubjectConversationChatMessages,
+  serializeSubjectIndexUpdateConversationEvent,
 } from '../dist/subject-conversation-chat.js'
 
 const sender = { id: 'PractitionerRole/clinician-1', name: 'Clinic team' }
@@ -42,3 +44,17 @@ test('rejects malformed timestamps and duplicate message ids before rendering', 
     { id: 'duplicate', createdAt: '2026-11-06T10:01:00.000Z', direction: SubjectConversationDirection.Incoming, sender, content: { kind: SubjectConversationContentKind.Text, text: 'Two' } },
   ]), /subject_conversation_id_duplicate/u)
 })
+
+test('round-trips only a versioned governed subject-index channel event', () => {
+  const event = {
+    id: 'index-event-1', createdAt: '2026-11-06T10:05:00.000Z',
+    content: { kind: 'subject-index-update', organizationReference: 'Organization/clinic-1',
+      serviceReference: 'Service/records', serviceName: 'Vaccination records', authoritativeSystem: 'ehr',
+      references: [{ label: 'Vaccination record', href: 'https://example.invalid/record/1' }] },
+  }
+  expectEvent(parseSubjectIndexUpdateConversationEvent(serializeSubjectIndexUpdateConversationEvent(event)), event)
+  assert.equal(parseSubjectIndexUpdateConversationEvent('ordinary private text'), undefined)
+  assert.equal(parseSubjectIndexUpdateConversationEvent(JSON.stringify({ type: 'unknown', event })), undefined)
+})
+
+function expectEvent(actual, expected) { assert.deepEqual(actual, expected) }

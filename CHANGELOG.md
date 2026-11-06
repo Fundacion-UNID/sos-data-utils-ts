@@ -1,6 +1,12 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
+## 0.6.25 - 2026-11-06
+
+- Add the versioned serializer/parser used to persist Antifraud subject-index
+  update events as encrypted text payloads in the existing conversation
+  Communication, without introducing another channel store.
+
 ## 0.6.24 - 2026-11-06
 
 - Add the platform-neutral subject-conversation contract and deterministic

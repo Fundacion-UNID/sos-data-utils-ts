@@ -19,6 +19,34 @@ export const SubjectConversationDirection = Object.freeze({
 
 export type SubjectConversationDirection = typeof SubjectConversationDirection[keyof typeof SubjectConversationDirection]
 
+export const SubjectIndexUpdateConversationEnvelopeType = 'urn:antifraudservices:conversation:subject-index-update:v1' as const
+
+/** Serializes the encrypted text payload persisted as a durable channel Communication. */
+export function serializeSubjectIndexUpdateConversationEvent(event: ServiceSubjectIndexUpdate): string {
+  return JSON.stringify({ type: SubjectIndexUpdateConversationEnvelopeType, event })
+}
+
+/** Parses only the governed versioned envelope; ordinary private text remains ordinary text. */
+export function parseSubjectIndexUpdateConversationEvent(value: string): ServiceSubjectIndexUpdate | undefined {
+  let parsed: unknown
+  try { parsed = JSON.parse(value) } catch { return undefined }
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return undefined
+  const envelope = parsed as Record<string, unknown>
+  if (envelope.type !== SubjectIndexUpdateConversationEnvelopeType || !envelope.event
+    || typeof envelope.event !== 'object' || Array.isArray(envelope.event)) return undefined
+  const event = envelope.event as ServiceSubjectIndexUpdate
+  try {
+    return buildServiceSubjectIndexUpdate({
+      id: event.id, createdAt: event.createdAt,
+      organizationReference: event.content?.organizationReference,
+      serviceReference: event.content?.serviceReference,
+      serviceName: event.content?.serviceName,
+      authoritativeSystem: event.content?.authoritativeSystem,
+      references: event.content?.references || [],
+    })
+  } catch { return undefined }
+}
+
 export type SubjectConversationActor = Readonly<{
   id: string
   name: string
@@ -105,5 +133,5 @@ function required(value: string, code: string): string {
   if (!normalized) throw new TypeError(code)
   return normalized
 }
-import type { ServiceSubjectIndexUpdate } from 'antifraud-data-utils-ts/service-conversation'
+import { buildServiceSubjectIndexUpdate, type ServiceSubjectIndexUpdate } from 'antifraud-data-utils-ts/service-conversation'
 
