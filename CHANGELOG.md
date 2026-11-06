@@ -3,9 +3,9 @@
 
 ## 0.6.25 - 2026-11-06
 
-- Add the versioned serializer/parser used to persist Antifraud subject-index
-  update events as encrypted text payloads in the existing conversation
-  Communication, without introducing another channel store.
+- Project the real FHIR document Communication that performs a subject-index
+  mutation into the shared Antifraud service-update conversation entry. No
+  synthetic text event or parallel channel record is introduced.
 
 ## 0.6.24 - 2026-11-06
 
