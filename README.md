@@ -4,6 +4,11 @@
 Copyright 2026 Connecting Solution & Applications Ltd.
 Licensed under the Apache License, Version 2.0; see [`NOTICE`](NOTICE).
 
+Demo portal persistence uses `demo-workspace-scope` to derive a server-owned
+namespace from deployment, network, portal family and Demo tenant. The builder
+rejects production and mismatched tenants. This namespace prevents storage
+overlap; it never authorizes a card, subject relationship or professional role.
+
 ## Documentation
 
 The [documentation index](docs/README.md) is the entry point for architecture,

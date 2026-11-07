@@ -43,6 +43,10 @@
       "types": "./dist/demo-member-lifecycle.d.ts",
       "default": "./dist/demo-member-lifecycle.js"
     },
+    "./demo-workspace-scope": {
+      "types": "./dist/demo-workspace-scope.d.ts",
+      "default": "./dist/demo-workspace-scope.js"
+    },
     "./portal-demo-fixtures": {
       "types": "./dist/portal-demo-fixtures.d.ts",
       "default": "./dist/portal-demo-fixtures.js"

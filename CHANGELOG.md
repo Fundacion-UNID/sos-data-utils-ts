@@ -1,6 +1,12 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # Changelog
 
+## Unreleased
+
+- Add a fail-closed, non-production Demo workspace scope so portal BFFs and
+  channel persistence cannot mix Demo, Test Network, portal-family or tenant
+  records. The scope is isolation metadata and grants no actor authority.
+
 ## 0.6.25 - 2026-11-06
 
 - Project the real FHIR document Communication that performs a subject-index
