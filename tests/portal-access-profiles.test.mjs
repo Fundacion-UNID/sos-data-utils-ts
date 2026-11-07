@@ -23,10 +23,22 @@ const priorityMvpProfileIds = [
 ]
 const focusedDemoSectorIds = [
   SoschainProfessionalDemoSectorIds.AnimalCare,
+  SoschainProfessionalDemoSectorIds.AnimalTech,
   SoschainProfessionalDemoSectorIds.HealthCare,
   SoschainProfessionalDemoSectorIds.PublicHealth,
   SoschainProfessionalDemoSectorIds.PublicSafety,
 ]
+
+test('offers a synthetic animal-tech organization to veterinarians and police without granting authority', () => {
+  const profiles = getSoschainDemoProfilesForSector(SoschainProfessionalDemoSectorIds.AnimalTech)
+  assert.ok(profiles.some(({ id }) => id === SoschainProfessionalDemoProfileIds.Veterinarian))
+  assert.ok(profiles.some(({ id }) => id === SoschainProfessionalDemoProfileIds.PoliceOfficer))
+  assert.ok(profiles.every(({ grantsAuthority }) => grantsAuthority === false))
+  assert.equal(
+    SOSCHAIN_DEMO_ORGANIZATIONS.find(({ sector }) => sector === SoschainProfessionalDemoSectorIds.AnimalTech)?.titleEn,
+    'Example animal technology organization',
+  )
+})
 
 test('publishes explicit real, test-network and preloaded-demo portal modes', () => {
   assert.deepEqual(SOSCHAIN_PORTAL_ACCESS_MODES.map(({ id }) => id), expectedAccessModeIds)
@@ -38,6 +50,7 @@ test('publishes explicit real, test-network and preloaded-demo portal modes', ()
   assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'partner')?.ledgerKind, 'production')
   assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'test-network')?.ledgerKind, 'test-network')
   assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'demo')?.ledgerKind, 'mock')
+  assert.equal(SOSCHAIN_PORTAL_ACCESS_MODES.find(({ id }) => id === 'demo')?.requiresTrustedLogin, true)
   assert.equal(new Set(SOSCHAIN_PORTAL_ACCESS_MODES.map(({ portalShell }) => portalShell)).size, 1)
 })
 

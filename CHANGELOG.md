@@ -6,6 +6,9 @@
 - Add a fail-closed, non-production Demo workspace scope so portal BFFs and
   channel persistence cannot mix Demo, Test Network, portal-family or tenant
   records. The scope is isolation metadata and grants no actor authority.
+- Require trusted login for Demo profiles and add the synthetic animal-tech
+  organization used to exercise veterinary and public-safety roles without
+  claiming employment, licence or gateway authority.
 
 ## 0.6.25 - 2026-11-06
 

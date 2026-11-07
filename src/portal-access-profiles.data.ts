@@ -71,7 +71,7 @@ export const SOSCHAIN_PORTAL_ACCESS_MODES: readonly SoschainPortalAccessMode[] =
     portalShell: 'shared',
     dataKind: 'synthetic-resettable',
     ledgerKind: 'mock',
-    requiresTrustedLogin: false,
+    requiresTrustedLogin: true,
     resetPolicy: 'periodic-demo-reset',
   }),
 ])
@@ -79,6 +79,7 @@ export const SOSCHAIN_PORTAL_ACCESS_MODES: readonly SoschainPortalAccessMode[] =
 export const SoschainProfessionalDemoSectorIds = Object.freeze({
   HealthCare: DataspaceSectors.HealthCare,
   AnimalCare: DataspaceSectors.AnimalCare,
+  AnimalTech: DataspaceSectors.AnimalTech,
   PublicHealth: CrossSectorOperationalSectors.PublicHealth,
   PublicSafety: CrossSectorOperationalSectors.PublicSafety,
 } as const)
@@ -183,6 +184,62 @@ export const SOSCHAIN_PROFESSIONAL_DEMO_PROFILES: readonly SoschainProfessionalD
     true,
   ),
   demoProfile(
+    SoschainProfessionalDemoProfileIds.Veterinarian,
+    SoschainProfessionalDemoSectorIds.AnimalTech,
+    HealthcareActorRoles.Veterinarian,
+    'Veterinarian',
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.VeterinaryAssistant,
+    SoschainProfessionalDemoSectorIds.AnimalTech,
+    HealthcareActorRoles.VeterinaryTechnicianOrAssistant,
+    'Veterinary assistant',
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.Receptionist,
+    SoschainProfessionalDemoSectorIds.AnimalTech,
+    HealthcareActorRoles.Receptionist,
+    'Receptionist',
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.Researcher,
+    SoschainProfessionalDemoSectorIds.AnimalTech,
+    MultichannelPermissionRoleClaims.Researcher,
+    'Researcher',
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.Paramedic,
+    SoschainProfessionalDemoSectorIds.AnimalTech,
+    EmergencyProfessionalRoles[EmergencyProfessionalRoleIds.Paramedic].claim,
+    EmergencyProfessionalRoles[EmergencyProfessionalRoleIds.Paramedic].titleEn,
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.Firefighter,
+    SoschainProfessionalDemoSectorIds.AnimalTech,
+    EmergencyProfessionalRoles[EmergencyProfessionalRoleIds.Firefighter].claim,
+    EmergencyProfessionalRoles[EmergencyProfessionalRoleIds.Firefighter].titleEn,
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.PoliceOfficer,
+    SoschainProfessionalDemoSectorIds.AnimalTech,
+    EmergencyProfessionalRoles[EmergencyProfessionalRoleIds.PoliceOfficer].claim,
+    EmergencyProfessionalRoles[EmergencyProfessionalRoleIds.PoliceOfficer].titleEn,
+    true,
+  ),
+  demoProfile(
+    SoschainProfessionalDemoProfileIds.Lifeguard,
+    SoschainProfessionalDemoSectorIds.AnimalTech,
+    EmergencyProfessionalRoles[EmergencyProfessionalRoleIds.Lifeguard].claim,
+    EmergencyProfessionalRoles[EmergencyProfessionalRoleIds.Lifeguard].titleEn,
+    true,
+  ),
+  demoProfile(
     SoschainProfessionalDemoProfileIds.Doctor,
     SoschainProfessionalDemoSectorIds.PublicHealth,
     HealthcareActorRoles.MedicalDoctors,
@@ -263,6 +320,12 @@ export const SOSCHAIN_DEMO_DEPARTMENTS: readonly SoschainDemoDepartment[] = Obje
     grantsAuthority: false,
   }),
   Object.freeze({
+    id: SoschainDemoDepartmentIds.Emergency,
+    sector: DataspaceSectors.AnimalTech,
+    titleEn: 'Animal technology response unit',
+    grantsAuthority: false,
+  }),
+  Object.freeze({
     id: SoschainDemoDepartmentIds.PublicInformation,
     sector: SoschainProfessionalDemoSectorIds.PublicHealth,
     titleEn: 'Public information service',
@@ -298,6 +361,7 @@ const demoOrganization = (
 export const SOSCHAIN_DEMO_ORGANIZATIONS: readonly SoschainDemoOrganization[] = Object.freeze([
   demoOrganization(SoschainProfessionalDemoSectorIds.HealthCare, REPOSITORY_SAFE_EXAMPLES.demoOrganizationUuids.healthCare, 'Example health-care organization'),
   demoOrganization(SoschainProfessionalDemoSectorIds.AnimalCare, REPOSITORY_SAFE_EXAMPLES.demoOrganizationUuids.animalCare, 'Example animal-care organization'),
+  demoOrganization(SoschainProfessionalDemoSectorIds.AnimalTech, REPOSITORY_SAFE_EXAMPLES.demoOrganizationUuids.animalTech, 'Example animal technology organization'),
   demoOrganization(SoschainProfessionalDemoSectorIds.PublicHealth, REPOSITORY_SAFE_EXAMPLES.demoOrganizationUuids.publicHealth, 'Example public-health organization'),
   demoOrganization(SoschainProfessionalDemoSectorIds.PublicSafety, REPOSITORY_SAFE_EXAMPLES.demoOrganizationUuids.publicSafety, 'Example public-safety organization'),
 ])
