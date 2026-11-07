@@ -139,6 +139,10 @@
       "types": "./dist/subject-conversation-chat.d.ts",
       "default": "./dist/subject-conversation-chat.js"
     },
+    "./portal-rtc-call": {
+      "types": "./dist/portal-rtc-call.d.ts",
+      "default": "./dist/portal-rtc-call.js"
+    },
     "./subject-encounter-access": {
       "types": "./dist/subject-encounter-access.d.ts",
       "default": "./dist/subject-encounter-access.js"

@@ -18,6 +18,11 @@ Use the canonical `IVaultRepository`/Confidential Storage port everywhere:
 - `indexeddb` for explicitly offline browser custody;
 - `firestore` or `postgresql` only for configured durable deployments.
 
+Keep execution profiles distinct: the CH all-local portal profile does not
+start or require Chat, the telephone assistant or the optional web assistant.
+Audio/video uses a dedicated RTC provider. Persist only invitations, terminal
+call events and optional unanswered audio through Communication.
+
 Never import Firestore, PostgreSQL, SQLite or IndexedDB from a Demo use case or
 route. Only a composition root may instantiate an adapter. IPFS/blob storage is
 optional externalization behind a durable adapter and never selects business
