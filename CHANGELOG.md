@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+## 0.6.28 - 2026-11-07
+
 - Separate the CH all-local portal, telephone assistant, optional web
   assistant and RTC execution profiles. Calls use a dedicated RTC provider;
   invitations, terminal events and unanswered audio remain Communications.
