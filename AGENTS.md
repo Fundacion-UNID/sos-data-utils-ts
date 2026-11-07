@@ -1,5 +1,14 @@
 # AGENTS.md - sos-data-utils-ts
 
+## Demo/Test Network adapter parity
+
+Apply
+[`preserve-demo-test-network-adapter-parity`](.codex/skills/preserve-demo-test-network-adapter-parity/SKILL.md)
+to every Demo, portal, channel, persistence or Expo change. Demo and Test
+Network execute the same use cases through `IVaultRepository`. Firestore must
+not become a Demo store; all-local uses memory and Expo uses SQLite through the
+same Confidential Storage port.
+
 ## Repository privacy is a release blocker
 
 - Use `.codex/skills/protect-repository-privacy/SKILL.md` before editing tests,
