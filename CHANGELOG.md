@@ -3,6 +3,11 @@
 
 ## Unreleased
 
+- Define the single Confidential Storage runtime composition shared by Demo,
+  Test Network, production web, offline browser and Expo. All-local selects
+  memory and Expo selects SQLite; Demo cannot introduce a Firestore-specific
+  route, store or use-case model.
+
 ## 0.6.26 - 2026-11-06
 
 - Add a fail-closed, non-production Demo workspace scope so portal BFFs and

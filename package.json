@@ -47,6 +47,10 @@
       "types": "./dist/demo-workspace-scope.d.ts",
       "default": "./dist/demo-workspace-scope.js"
     },
+    "./confidential-storage-runtime": {
+      "types": "./dist/confidential-storage-runtime.d.ts",
+      "default": "./dist/confidential-storage-runtime.js"
+    },
     "./portal-demo-fixtures": {
       "types": "./dist/portal-demo-fixtures.d.ts",
       "default": "./dist/portal-demo-fixtures.js"

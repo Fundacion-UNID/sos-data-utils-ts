@@ -1,6 +1,15 @@
 <!-- Copyright 2026 Connecting Solution & Applications Ltd under the Apache License, Version 2.0. -->
 # sos-data-utils-ts
 
+## One persistence contract across runtimes
+
+Demo and Test Network execute the same use cases through the canonical
+Confidential Storage port. Only the composition root changes adapters:
+all-local uses memory, Expo uses SQLite, offline web may use IndexedDB, and
+durable deployments explicitly select Firestore or PostgreSQL. Firestore must
+not be imported by a Demo route or used to create a parallel Demo model. See
+[`CONFIDENTIAL_STORAGE_RUNTIME_PARITY.md`](docs/CONFIDENTIAL_STORAGE_RUNTIME_PARITY.md).
+
 Copyright 2026 Connecting Solution & Applications Ltd.
 Licensed under the Apache License, Version 2.0; see [`NOTICE`](NOTICE).
 
