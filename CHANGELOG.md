@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+## 0.6.26 - 2026-11-06
+
 - Add a fail-closed, non-production Demo workspace scope so portal BFFs and
   channel persistence cannot mix Demo, Test Network, portal-family or tenant
   records. The scope is isolation metadata and grants no actor authority.
