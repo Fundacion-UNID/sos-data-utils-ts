@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+## 0.6.27 - 2026-11-07
+
 - Define the single Confidential Storage runtime composition shared by Demo,
   Test Network, production web, offline browser and Expo. All-local selects
   memory and Expo selects SQLite; Demo cannot introduce a Firestore-specific
