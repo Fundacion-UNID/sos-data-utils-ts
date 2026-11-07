@@ -10,6 +10,11 @@ durable deployments explicitly select Firestore or PostgreSQL. Firestore must
 not be imported by a Demo route or used to create a parallel Demo model. See
 [`CONFIDENTIAL_STORAGE_RUNTIME_PARITY.md`](docs/CONFIDENTIAL_STORAGE_RUNTIME_PARITY.md).
 
+The CH all-local portal profile requires no telephone assistant, web assistant
+or Chat service. Those are separate optional channel-integration profiles.
+Realtime audio/video uses a dedicated RTC provider; call invitations, terminal
+states and unanswered audio attachments are canonical Communications.
+
 Copyright 2026 Connecting Solution & Applications Ltd.
 Licensed under the Apache License, Version 2.0; see [`NOTICE`](NOTICE).
 

@@ -3,6 +3,10 @@
 
 ## Unreleased
 
+- Separate the CH all-local portal, telephone assistant, optional web
+  assistant and RTC execution profiles. Calls use a dedicated RTC provider;
+  invitations, terminal events and unanswered audio remain Communications.
+
 ## 0.6.27 - 2026-11-07
 
 - Define the single Confidential Storage runtime composition shared by Demo,

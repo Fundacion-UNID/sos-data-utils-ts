@@ -8,6 +8,9 @@ to every Demo, portal, channel, persistence or Expo change. Demo and Test
 Network execute the same use cases through `IVaultRepository`. Firestore must
 not become a Demo store; all-local uses memory and Expo uses SQLite through the
 same Confidential Storage port.
+The CH all-local portal gate must not start or require Chat, a telephone
+assistant or a web assistant. RTC is a separate provider boundary; only its
+invitation, terminal state and unanswered audio attachment enter Communication.
 
 ## Repository privacy is a release blocker
 

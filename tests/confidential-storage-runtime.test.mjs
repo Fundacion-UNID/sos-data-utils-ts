@@ -1,5 +1,7 @@
 // Flow contract: Demo, Test Network, production web and Expo execute the same use cases through the canonical Confidential Storage port; only the composition root selects its adapter.
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import test from 'node:test'
 import {
   selectConfidentialStorageAdapter,
@@ -25,4 +27,15 @@ test('rejects adapters that break environment parity or durable deployments', ()
     () => selectConfidentialStorageAdapter({ runtime: 'expo', configured: 'memory' }),
     /expo_confidential_storage_must_be_sqlite/,
   )
+})
+
+test('keeps the CH portal, optional assistants and dedicated RTC as separate execution profiles', () => {
+  const root = process.cwd()
+  const contract = [
+    'README.md', 'AGENTS.md', 'docs/CONFIDENTIAL_STORAGE_RUNTIME_PARITY.md',
+    '.codex/skills/preserve-demo-test-network-adapter-parity/SKILL.md',
+  ].map(path => readFileSync(join(root, path), 'utf8')).join('\n')
+  assert.match(contract, /all-local portal[\s\S]*does not[\s\S]*(start|require)[\s\S]*Chat/i)
+  assert.match(contract, /dedicated RTC provider/i)
+  assert.match(contract, /unanswered audio[\s\S]*Communication/i)
 })
